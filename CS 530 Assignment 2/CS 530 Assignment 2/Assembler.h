@@ -8,3 +8,10 @@ using namespace std;
 
 void Pass1(std::string Path);
 void Pass2(std::string Path);
+void GetLabel(char* dest, char* line);
+void GetOpCode(char* dest, char* line);
+void GetOperand(char* dest, char* line);
+int StringToInt(char* string);
+void TrimEnd(char *string);
+void RemoveEndApostrophe(char *string);
+void RemoveOperandType(char *string);

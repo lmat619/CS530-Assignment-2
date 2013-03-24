@@ -1,38 +1,38 @@
 /*
- *  SIC/XE Assembler Project, Released Dec,23 2012.
- *
- *  Copyright (C) 2011 Ahmad Mousa
- *  Copyright (C) 2011 Laith Zuhair
- *  Copyright (C) 2011 Sari Sultan
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *  
- *
- *
- *  In addition, as a special exception, the copyright holders give
- *  permission to link the code of portions of this program with the
- *  Students projects under the conditions of non-commercial projects
- *
- *  You must obey the GNU General Public License in all respects
- *  for all of the code used other than Students needs. *  If you modify
- *  file(s) with this exception, you may extend this exception to your
- *  version of the file(s), but you are not obligated to do so. *  If you
- *  do not wish to do so, delete this exception statement from your
- *  version. *  If you delete this exception statement from all source
- *  files in the program, then also delete it here.
- */
+*  SIC/XE Assembler Project, Released Dec,23 2012.
+*
+*  Copyright (C) 2011 Ahmad Mousa
+*  Copyright (C) 2011 Laith Zuhair
+*  Copyright (C) 2011 Sari Sultan
+*
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*  
+*
+*
+*  In addition, as a special exception, the copyright holders give
+*  permission to link the code of portions of this program with the
+*  Students projects under the conditions of non-commercial projects
+*
+*  You must obey the GNU General Public License in all respects
+*  for all of the code used other than Students needs. *  If you modify
+*  file(s) with this exception, you may extend this exception to your
+*  version of the file(s), but you are not obligated to do so. *  If you
+*  do not wish to do so, delete this exception statement from your
+*  version. *  If you delete this exception statement from all source
+*  files in the program, then also delete it here.
+*/
 // in order for full functionallity we recommend using Visual C++ 2010
 // sorry for not using gcc compiler, but the course terms refused using gcc
 #include <iostream>
@@ -50,8 +50,8 @@ class Node			// linked list class to deal with expressions
 public:
 	Node()
 	{
-	next= NULL;
-	prev =NULL;
+		next= NULL;
+		prev =NULL;
 	}
 	string data;
 	Node *next;
@@ -67,61 +67,61 @@ protected:
 class Stack :public Node		//stack class to deal with expressions by using the infix and postfix concept in data structure
 {
 public:	
-Stack::Stack()
-{
-	head = NULL;
-	Counter = 0;
-}
-void Stack::push( string value )
-{
-	Node *nn = new Node;
-	nn ->data = value;
-
-	nn->next= head;
-	head = nn;
-
-	Counter++;
-
-}
-string  Stack::pop()
-{
-	string val;
-	if( isEmpty() )
+	Stack::Stack()
 	{
-		cout<<"\n\tTHE STACK IS EMPTY\n";
-		return val;
+		head = NULL;
+		Counter = 0;
 	}
-
-	else
+	void Stack::push( string value )
 	{
-		Node *del = head;
+		Node *nn = new Node;
+		nn ->data = value;
 
-		head= head->next;
-		val = del->data;
-		delete del;
+		nn->next= head;
+		head = nn;
 
-		Counter--;
-		return val;
+		Counter++;
+
 	}
-}
-string Stack::topEl()
-{
-	if( isEmpty() )
+	string  Stack::pop()
 	{
-		return "";
-		
-	}
+		string val;
+		if( isEmpty() )
+		{
+			cout<<"\n\tTHE STACK IS EMPTY\n";
+			return val;
+		}
 
-	else
+		else
+		{
+			Node *del = head;
+
+			head= head->next;
+			val = del->data;
+			delete del;
+
+			Counter--;
+			return val;
+		}
+	}
+	string Stack::topEl()
 	{
+		if( isEmpty() )
+		{
+			return "";
 
-		return (head->data);
+		}
+
+		else
+		{
+
+			return (head->data);
+		}
 	}
-}
-bool Stack::isEmpty()
-{
-	return head == NULL;
-}
+	bool Stack::isEmpty()
+	{
+		return head == NULL;
+	}
 };
 
 #endif
@@ -209,46 +209,46 @@ void main ()
 	PcArray[PcCounter++]=PC;	
 	for( int i=0 ; i<AssemCounter;i++) //for giving the machine code for every instruction
 	{
-		    PcTrack=i+1;				
+		PcTrack=i+1;				
+		P_C=PcArray[PcTrack++];
+		while(P_C == "")
+		{
 			P_C=PcArray[PcTrack++];
-			while(P_C == "")
-			{
-				P_C=PcArray[PcTrack++];
-			}
-			Pass2(AssemCode[i],P_C,i);
+		}
+		Pass2(AssemCode[i],P_C,i);
 	}
 	cout<< "\nThe Array Instruction is :-\n";
-	        cout<<"\n\n |=============|========================================|================|\n"
-				    <<" |       PC    |              Instruction               |  Macheine Code |\n"
-				    <<" |=============|========================================|================|\n";
+	cout<<"\n\n |=============|========================================|================|\n"
+		<<" |       PC    |              Instruction               |  Macheine Code |\n"
+		<<" |=============|========================================|================|\n";
 	for( int i=0 ; i<AssemCounter;i++)
 	{	
 		string out= AssemCode[i];
 		for ( int j=0 ; j<out.length();j++)
-				{
-					
-						if (out.find("	")!= string::npos)
-					{
-						int pos= out.find("	");
-						out=out.replace(pos,1," ");
-					}
-					
+		{
+
+			if (out.find("	")!= string::npos)
+			{
+				int pos= out.find("	");
+				out=out.replace(pos,1," ");
+			}
+
 		}
-				cout<<" |   "<<setiosflags(ios::left)<<setw(9)<<PcArray[i]<<" |  "<<setw(32)<<out<<"\t|  "<<setw(13)<<MachCode[i]<<" |\n"
-				    <<" |=============|========================================|================|\n";
+		cout<<" |   "<<setiosflags(ios::left)<<setw(9)<<PcArray[i]<<" |  "<<setw(32)<<out<<"\t|  "<<setw(13)<<MachCode[i]<<" |\n"
+			<<" |=============|========================================|================|\n";
 	}	
 	cout<< "\n\nThe Labels are :-\n";
 	for( int i=0 ; i<LabelCounter;i++)
-		{
+	{
 		cout<<PcLabels[i]<<'\t'<<Labels[i]<<endl;
-		}
+	}
 
 	Object_program();		//to print the object program
-   
+
 	IntermediateFile.open("Intermediate File.txt");
 	ObjectPorogram.open("Object Program File.txt");
-	
-	
+
+
 	if( IntermediateFile.is_open() && ObjectPorogram.is_open() )
 	{
 		ShowAll();
@@ -259,31 +259,31 @@ void main ()
 		cout<<" Unable to open One of the output files ";
 		goto L1;
 	}
-	
-	L1:cout<<"Press any key to continue... ";
-    cin.get();
+
+L1:cout<<"Press any key to continue... ";
+	cin.get();
 }
 //================================================== Function implementations
 void ShowAll()
 {
 	IntermediateFile<<"\n\n |=============|========================================|================|\n"
-				        <<" |      PC     |              Instruction               |  Obeject Code  |\n"
-				        <<" |=============|========================================|================|\n";
+		<<" |      PC     |              Instruction               |  Obeject Code  |\n"
+		<<" |=============|========================================|================|\n";
 	for( int i=0 ; i<AssemCounter;i++)
 	{	
 		string out= AssemCode[i];
 		for ( int j=0 ; j<out.length();j++)
-				{
-					
-						if (out.find("	")!= string::npos)
-					{
-						int pos= out.find("	");
-						out=out.replace(pos,1," ");
-					}
-					
+		{
+
+			if (out.find("	")!= string::npos)
+			{
+				int pos= out.find("	");
+				out=out.replace(pos,1," ");
+			}
+
 		}
-				IntermediateFile<<" |   "<<setiosflags(ios::left)<<setw(9)<<PcArray[i]<<" |  "<<setw(32)<<out<<"\t|  "<<setw(13)<<MachCode[i]<<" |\n"
-				    <<" |=============|========================================|================|\n";
+		IntermediateFile<<" |   "<<setiosflags(ios::left)<<setw(9)<<PcArray[i]<<" |  "<<setw(32)<<out<<"\t|  "<<setw(13)<<MachCode[i]<<" |\n"
+			<<" |=============|========================================|================|\n";
 	}	
 
 
@@ -303,7 +303,7 @@ void Pass1(string instruction)
 	int LitFlag=0;
 	string Parts[10];bool FParts=0;
 	int Part_count=0;
-	
+
 	if(instruction[0]==' '|| instruction[0]=='\t')
 		FParts=1;
 	else 
@@ -318,7 +318,7 @@ void Pass1(string instruction)
 		if (inst.find(" ")!= string::npos)
 			pos1= inst.find(" ");
 		if(inst.find("\t")!= string::npos)
-		    pos2=inst.find("\t");
+			pos2=inst.find("\t");
 
 		if (pos1<pos2)
 			pos=pos1;
@@ -340,7 +340,7 @@ void Pass1(string instruction)
 		}
 	}
 
-	
+
 	for (int i=0 ; i<Part_count;i++)
 	{
 		int format;
@@ -354,7 +354,7 @@ void Pass1(string instruction)
 			part = part.substr(1);
 		}
 
-		
+
 		for(int i=0;i<59;i++)
 		{
 			if (Mnemonic[i]== part)
@@ -381,168 +381,168 @@ void Pass1(string instruction)
 				inst= instruction.substr(pos);
 				DelSpace(inst);
 				if (instruction.find("X'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("=");
-				pos2 = instruction.find_last_of("'");
-				inst= instruction.substr(pos1,pos2-pos1+1);
-
-				int check = AddLit(instruction,inst);
-
-				if ( check == -1 )
 				{
-					pos1 = instruction.find_first_of("'");
-			        pos2 = instruction.find_last_of("'");
-			        inst= instruction.substr(pos1+1,pos2-pos1-1);
-					if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
+					pos1 = instruction.find_first_of("=");
+					pos2 = instruction.find_last_of("'");
+					inst= instruction.substr(pos1,pos2-pos1+1);
+
+					int check = AddLit(instruction,inst);
+
+					if ( check == -1 )
 					{
-						LitVal[LitCounter] =inst;
-						  int len = ceil(inst.length()/2.0);
-						  LitLen[LitCounter++] =len;
-					}
-					else
-					{
-						if (inst.length()==1)
-							inst="0"+inst;
-						string Val =inst+"000000";
-						Val= Val.substr(0,6);
-						LitVal[LitCounter] =Val;
-						  int len = ceil(Val.length()/2.0);
-						  LitLen[LitCounter++] =len;
+						pos1 = instruction.find_first_of("'");
+						pos2 = instruction.find_last_of("'");
+						inst= instruction.substr(pos1+1,pos2-pos1-1);
+						if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
+						{
+							LitVal[LitCounter] =inst;
+							int len = ceil(inst.length()/2.0);
+							LitLen[LitCounter++] =len;
+						}
+						else
+						{
+							if (inst.length()==1)
+								inst="0"+inst;
+							string Val =inst+"000000";
+							Val= Val.substr(0,6);
+							LitVal[LitCounter] =Val;
+							int len = ceil(Val.length()/2.0);
+							LitLen[LitCounter++] =len;
+						}
+
 					}
 
 				}
-
-			}
-		    else if(instruction.find("C'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("=");
-				pos2 = instruction.find_last_of("'");
-				inst= instruction.substr(pos1,pos2-pos1+1);
-
-				int check = AddLit(instruction,inst);
-
-				if ( check == -1 )
+				else if(instruction.find("C'")!= string::npos)
 				{
-					pos1 = instruction.find_first_of("'");
-			        pos2 = instruction.find_last_of("'");
-			        inst= instruction.substr(pos1+1,pos2-pos1-1);
+					pos1 = instruction.find_first_of("=");
+					pos2 = instruction.find_last_of("'");
+					inst= instruction.substr(pos1,pos2-pos1+1);
 
-			       if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
+					int check = AddLit(instruction,inst);
+
+					if ( check == -1 )
 					{
-						string Value,Val;
-						int hex;char c;
-						for(int i=0;i<inst.length();i++)
+						pos1 = instruction.find_first_of("'");
+						pos2 = instruction.find_last_of("'");
+						inst= instruction.substr(pos1+1,pos2-pos1-1);
+
+						if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
 						{
-							Val= inst.substr(i,1);
-							hex=Val[0];
-							Val =IntToHex(hex);
-							if(Val.length()==1)
-								Val="0"+Val;
-							Value=Value+Val;
+							string Value,Val;
+							int hex;char c;
+							for(int i=0;i<inst.length();i++)
+							{
+								Val= inst.substr(i,1);
+								hex=Val[0];
+								Val =IntToHex(hex);
+								if(Val.length()==1)
+									Val="0"+Val;
+								Value=Value+Val;
 
-				
+
+							}
+							LitVal[LitCounter] =Value;
+							int len = ceil(Value.length()/2.0);
+							LitLen[LitCounter++] =len;
 						}
-						LitVal[LitCounter] =Value;
-						  int len = ceil(Value.length()/2.0);
-						  LitLen[LitCounter++] =len;
-					}
-					else
-					{
-						string Value,Val;
-						int hex;
-						for(int i=0;i<inst.length();i++)
+						else
 						{
-							Val= inst.substr(i,1);
-							hex=Val[0];
-							Val =IntToHex(hex);
-							if(Val.length()==1)
-								Val="0"+Val;
-							Value=Value+Val;
+							string Value,Val;
+							int hex;
+							for(int i=0;i<inst.length();i++)
+							{
+								Val= inst.substr(i,1);
+								hex=Val[0];
+								Val =IntToHex(hex);
+								if(Val.length()==1)
+									Val="0"+Val;
+								Value=Value+Val;
 
-				
+
+							}
+							Value=Value+"000000";
+							Value= Value.substr(0,6);
+							LitVal[LitCounter] =Value;
+							int len = ceil(Value.length()/2.0);
+							LitLen[LitCounter++] =len;
 						}
-						Value=Value+"000000";
-						Value= Value.substr(0,6);
-						LitVal[LitCounter] =Value;
-						  int len = ceil(Value.length()/2.0);
-						  LitLen[LitCounter++] =len;
+
+
 					}
-
-
 				}
-			}
 				else if(inst == "=*")
-			{
-
-				int check = AddLit(instruction,inst);
-
-				if ( check == -1 )
-				{
-					
-			        inst= instruction.substr(1);
-
-			       if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
-					{
-						string Value,Val;
-						if(Format4Flag==1)
-						Val=Fill(IntToHex(HexToInt(PC)-4));
-						else
-							Val=Fill(IntToHex(HexToInt(PC)-3));
-						Value=Val.substr(Val.length()-2,2);
-						LitVal[LitCounter] =Value;
-						  int len = ceil(Val.length()/2.0);
-						  LitLen[LitCounter++] =len;
-					}
-					else
-					{
-						string Value,Val;
-						if(Format4Flag==1)
-						Val=Fill(IntToHex(HexToInt(PC)-4));
-						else
-							Val=Fill(IntToHex(HexToInt(PC)-3));
-
-						Value= Val.substr(Val.length()-6,6);
-						Value= Value.substr(4,2)+Value.substr(2,2)+Value.substr(0,2);
-						LitVal[LitCounter] =Value;
-						  int len = ceil(Value.length()/2.0);
-						  LitLen[LitCounter++] =len;
-					}
-				}
-			
-			}
-			else
-			{
-				int check = AddLit(instruction,inst);
-
-				if ( check == -1 )
 				{
 
-			       if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
-					{
-						string Value,Val;
-						Val=IntToHex(StrToInt(Expression(inst)));
-						Val=Fill(Val);
-						Value=Val.substr(Val.length()-2,2);
-						LitVal[LitCounter] =Value;
-						  int len = ceil(Val.length()/2.0);
-						  LitLen[LitCounter++] =len;
-					}
-					else
-					{
-						string Value,Val;
-						Val=IntToHex(StrToInt(Expression(inst)));
-						Val=Fill(Val);
-						Value=Val.substr(Val.length()-6,6);
-						LitVal[LitCounter] =Value;
-						  int len = ceil(Val.length()/2.0);
-						  LitLen[LitCounter++] =len;
-					}
+					int check = AddLit(instruction,inst);
 
+					if ( check == -1 )
+					{
+
+						inst= instruction.substr(1);
+
+						if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
+						{
+							string Value,Val;
+							if(Format4Flag==1)
+								Val=Fill(IntToHex(HexToInt(PC)-4));
+							else
+								Val=Fill(IntToHex(HexToInt(PC)-3));
+							Value=Val.substr(Val.length()-2,2);
+							LitVal[LitCounter] =Value;
+							int len = ceil(Val.length()/2.0);
+							LitLen[LitCounter++] =len;
+						}
+						else
+						{
+							string Value,Val;
+							if(Format4Flag==1)
+								Val=Fill(IntToHex(HexToInt(PC)-4));
+							else
+								Val=Fill(IntToHex(HexToInt(PC)-3));
+
+							Value= Val.substr(Val.length()-6,6);
+							Value= Value.substr(4,2)+Value.substr(2,2)+Value.substr(0,2);
+							LitVal[LitCounter] =Value;
+							int len = ceil(Value.length()/2.0);
+							LitLen[LitCounter++] =len;
+						}
+					}
 
 				}
-			
-			}
-				
+				else
+				{
+					int check = AddLit(instruction,inst);
+
+					if ( check == -1 )
+					{
+
+						if (part=="LDCH"||part=="STCH"||part=="WD"||part=="RD"||part=="TD")
+						{
+							string Value,Val;
+							Val=IntToHex(StrToInt(Expression(inst)));
+							Val=Fill(Val);
+							Value=Val.substr(Val.length()-2,2);
+							LitVal[LitCounter] =Value;
+							int len = ceil(Val.length()/2.0);
+							LitLen[LitCounter++] =len;
+						}
+						else
+						{
+							string Value,Val;
+							Val=IntToHex(StrToInt(Expression(inst)));
+							Val=Fill(Val);
+							Value=Val.substr(Val.length()-6,6);
+							LitVal[LitCounter] =Value;
+							int len = ceil(Val.length()/2.0);
+							LitLen[LitCounter++] =len;
+						}
+
+
+					}
+
+				}
+
 			}
 			break;
 		}
@@ -550,214 +550,214 @@ void Pass1(string instruction)
 		if(Fmnemonic != 1)
 		{
 			if(part=="START" || part=="BASE" )
-		{
-			PcArray[PcCounter++]="";
-			break;
-		}
-		else
-			if (part=="END" || part=="LTORG")
 			{
+				PcArray[PcCounter++]="";
+				break;
+			}
+			else
+				if (part=="END" || part=="LTORG")
+				{
 					PcArray[PcCounter++]= "";
 
 					if (LitCount<LitCounter)
 						AssemCode[AssemCounter++]=instruction;
 
-				for (;LitCount<LitCounter;LitCount++)
-				{
-					PC=Fill(PC);
-					LitAdd[LitCount]= PC;
-
-					if(LitAdd[LitCount]=="=*")
-						ModRec[ModCounter++]="M^"+Fill(PC)+"^06";
-
-					PcArray[PcCounter++]= PC;
-					AssemCode[AssemCounter++]="* "+ LitName[LitCount];
-
-					PC= IntToHex(HexToInt(PC)+LitLen[LitCount]);
-					LitFlag=1;
-					
-				}
-
-				break;
-				
-
-			}
-		else
-			if (part=="ORG")
-			{
-			    pos=instruction.find("ORG");
-				pos=pos+3;
-				inst= instruction.substr(pos);
-				DelSpace(inst);DelSpace(inst);
-				PC=IntToHex(StrToInt(Expression(inst)));
-			}
-		else if(part=="BYTE")
-		{
-			if (instruction.find("X'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-			    pos2 = instruction.find_last_of("'");
-			    part= instruction.substr(pos1+1,pos2-pos1-1);
-
-				int length = ceil(part.length()/2.0);
-
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex(HexToInt(PC) + 1);
-			}
-		    else if(instruction.find("C'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-				pos2 = instruction.find_last_of("'");
-				 part= instruction.substr(pos1+1,pos2-pos1-1);
-
-				int length = part.length();
-
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex(HexToInt(PC) + length);
-			}
-			else
-			{
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex(HexToInt(PC) + 1);
-			}
-
-			break;
-
-
-		}
-		else if(part=="WORD")
-		{
-			if (instruction.find("X'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-				pos2 = instruction.find_last_of("'");
-				 part= instruction.substr(pos1+1,pos2-pos1-1);
-
-				int length = ceil(part.length()/2.0);
-				if (length<3)
-					length=3;
-
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex(HexToInt(PC) + 3);
-			}
-		    else if(instruction.find("C'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-				pos2 = instruction.find_last_of("'");
-				part= instruction.substr(pos1+1,pos2-pos1-1);
-
-				int length =  part.length();
-
-				if (length<3)
-					length=3;
-
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex(HexToInt(PC) + length);
-			}
-			else
-			{
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex( HexToInt(PC) + 3);
-			}
-
-			break;
-
-		}
-
-		else if(part=="RESB")
-		{
-
-				pos = instruction.find("RESB");
-				pos=pos+4;
-				part= instruction.substr(pos);
-
-				DelSpace(part);   DelSpace(part);
-
-				int val = StrToInt(part);
-	
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex( HexToInt(PC) + val);
-
-				break;
-
-		}
-		else if(part=="RESW")
-		{
-
-				pos = instruction.find("RESW");
-				pos=pos+4;
-				part= instruction.substr(pos);
-
-				DelSpace(part);   DelSpace(part);
-
-				int val = StrToInt(part)*3;
-	
-				PC=Fill(PC);
-				PcArray[PcCounter++]=PC;
-				PC= IntToHex( HexToInt(PC) + val);
-				break;
-
-		}
-		else
-		{
-			if (i == 0)
-			{
-				
-				if (instruction.find("EQU")!= string::npos)
-				{
-					
-					PcArray[PcCounter++]="";
-					string pc="";
-					pos = instruction.find("EQU");
-					pos=pos+3;
-					inst =instruction.substr(pos);
-
-					DelSpace(inst);DelSpace(inst);
-					if (inst.find("X'")!= string::npos)
+					for (;LitCount<LitCounter;LitCount++)
 					{
-						pos1 = inst.find_first_of("'");
-						pos2 = inst.find_last_of("'");
-						pc= inst.substr(pos1+1,pos2-pos1-1);
-						pc = Fill(pc);
-						AddLables(part,pc,0);
-					}
-					else if(inst.find("C'")!= string::npos)
-					{
-						pos1 = instruction.find_first_of("'");
-						pos2 = instruction.find_last_of("'");
-						pc= instruction.substr(pos1+1,pos2-pos1-1);
-						pc = Fill(pc);
-						AddLables(part,pc,0);
-					}
-					else if(inst=="*")
-					{
-						AddLables(part,PC,0);
-					}
-					else
-					{
-						pc = IntToHex(StrToInt(Expression(inst)));
-						AddLables(part,pc,0);
+						PC=Fill(PC);
+						LitAdd[LitCount]= PC;
+
+						if(LitAdd[LitCount]=="=*")
+							ModRec[ModCounter++]="M^"+Fill(PC)+"^06";
+
+						PcArray[PcCounter++]= PC;
+						AssemCode[AssemCounter++]="* "+ LitName[LitCount];
+
+						PC= IntToHex(HexToInt(PC)+LitLen[LitCount]);
+						LitFlag=1;
+
 					}
 
 					break;
+
+
 				}
 				else
-				{
-					AddLables(part,PC,1);
-				}
-			}
-		}
-}
+					if (part=="ORG")
+					{
+						pos=instruction.find("ORG");
+						pos=pos+3;
+						inst= instruction.substr(pos);
+						DelSpace(inst);DelSpace(inst);
+						PC=IntToHex(StrToInt(Expression(inst)));
+					}
+					else if(part=="BYTE")
+					{
+						if (instruction.find("X'")!= string::npos)
+						{
+							pos1 = instruction.find_first_of("'");
+							pos2 = instruction.find_last_of("'");
+							part= instruction.substr(pos1+1,pos2-pos1-1);
 
-}
-if (LitFlag==0)
-	AssemCode[AssemCounter++]=instruction;
+							int length = ceil(part.length()/2.0);
+
+							PC=Fill(PC);
+							PcArray[PcCounter++]=PC;
+							PC= IntToHex(HexToInt(PC) + 1);
+						}
+						else if(instruction.find("C'")!= string::npos)
+						{
+							pos1 = instruction.find_first_of("'");
+							pos2 = instruction.find_last_of("'");
+							part= instruction.substr(pos1+1,pos2-pos1-1);
+
+							int length = part.length();
+
+							PC=Fill(PC);
+							PcArray[PcCounter++]=PC;
+							PC= IntToHex(HexToInt(PC) + length);
+						}
+						else
+						{
+							PcArray[PcCounter++]=PC;
+							PC= IntToHex(HexToInt(PC) + 1);
+						}
+
+						break;
+
+
+					}
+					else if(part=="WORD")
+					{
+						if (instruction.find("X'")!= string::npos)
+						{
+							pos1 = instruction.find_first_of("'");
+							pos2 = instruction.find_last_of("'");
+							part= instruction.substr(pos1+1,pos2-pos1-1);
+
+							int length = ceil(part.length()/2.0);
+							if (length<3)
+								length=3;
+
+							PC=Fill(PC);
+							PcArray[PcCounter++]=PC;
+							PC= IntToHex(HexToInt(PC) + 3);
+						}
+						else if(instruction.find("C'")!= string::npos)
+						{
+							pos1 = instruction.find_first_of("'");
+							pos2 = instruction.find_last_of("'");
+							part= instruction.substr(pos1+1,pos2-pos1-1);
+
+							int length =  part.length();
+
+							if (length<3)
+								length=3;
+
+							PC=Fill(PC);
+							PcArray[PcCounter++]=PC;
+							PC= IntToHex(HexToInt(PC) + length);
+						}
+						else
+						{
+							PC=Fill(PC);
+							PcArray[PcCounter++]=PC;
+							PC= IntToHex( HexToInt(PC) + 3);
+						}
+
+						break;
+
+					}
+
+					else if(part=="RESB")
+					{
+
+						pos = instruction.find("RESB");
+						pos=pos+4;
+						part= instruction.substr(pos);
+
+						DelSpace(part);   DelSpace(part);
+
+						int val = StrToInt(part);
+
+						PC=Fill(PC);
+						PcArray[PcCounter++]=PC;
+						PC= IntToHex( HexToInt(PC) + val);
+
+						break;
+
+					}
+					else if(part=="RESW")
+					{
+
+						pos = instruction.find("RESW");
+						pos=pos+4;
+						part= instruction.substr(pos);
+
+						DelSpace(part);   DelSpace(part);
+
+						int val = StrToInt(part)*3;
+
+						PC=Fill(PC);
+						PcArray[PcCounter++]=PC;
+						PC= IntToHex( HexToInt(PC) + val);
+						break;
+
+					}
+					else
+					{
+						if (i == 0)
+						{
+
+							if (instruction.find("EQU")!= string::npos)
+							{
+
+								PcArray[PcCounter++]="";
+								string pc="";
+								pos = instruction.find("EQU");
+								pos=pos+3;
+								inst =instruction.substr(pos);
+
+								DelSpace(inst);DelSpace(inst);
+								if (inst.find("X'")!= string::npos)
+								{
+									pos1 = inst.find_first_of("'");
+									pos2 = inst.find_last_of("'");
+									pc= inst.substr(pos1+1,pos2-pos1-1);
+									pc = Fill(pc);
+									AddLables(part,pc,0);
+								}
+								else if(inst.find("C'")!= string::npos)
+								{
+									pos1 = instruction.find_first_of("'");
+									pos2 = instruction.find_last_of("'");
+									pc= instruction.substr(pos1+1,pos2-pos1-1);
+									pc = Fill(pc);
+									AddLables(part,pc,0);
+								}
+								else if(inst=="*")
+								{
+									AddLables(part,PC,0);
+								}
+								else
+								{
+									pc = IntToHex(StrToInt(Expression(inst)));
+									AddLables(part,pc,0);
+								}
+
+								break;
+							}
+							else
+							{
+								AddLables(part,PC,1);
+							}
+						}
+					}
+		}
+
+	}
+	if (LitFlag==0)
+		AssemCode[AssemCounter++]=instruction;
 }
 void Pass2(string instruction,string Pc,int index)
 {
@@ -773,7 +773,7 @@ void Pass2(string instruction,string Pc,int index)
 
 	string Parts[10];bool FParts=0;
 	int Part_count=0;
-	
+
 	if(instruction[0]==' '|| instruction[0]=='\t')
 		FParts=1;
 	else 
@@ -788,7 +788,7 @@ void Pass2(string instruction,string Pc,int index)
 		if (inst.find(" ")!= string::npos)
 			pos1= inst.find(" ");
 		if(inst.find("\t")!= string::npos)
-		    pos2=inst.find("\t");
+			pos2=inst.find("\t");
 
 		if (pos1<pos2)
 			pos=pos1;
@@ -845,11 +845,11 @@ void Pass2(string instruction,string Pc,int index)
 				}
 			}
 			else
-				{
-					string Loc = PcArray[index];
-					ModRec[ModCounter++]="M^"+Fill(IntToHex(HexToInt(Loc)+1))+"^05";
-				}
-				
+			{
+				string Loc = PcArray[index];
+				ModRec[ModCounter++]="M^"+Fill(IntToHex(HexToInt(Loc)+1))+"^05";
+			}
+
 		}
 
 		for(int i=0;i<59;i++)
@@ -906,209 +906,209 @@ void Pass2(string instruction,string Pc,int index)
 					break;
 				}
 				if ( instruction.find("=")!=string::npos)
-			{
-				pos1 = instruction.find_first_of("=");
-				pos2 = instruction.find_last_of("'");
-				part= instruction.substr(pos1,pos2-pos1+1);
-
-			   int Index ;
-
-				for(int i=0;i<LitCounter;i++)
 				{
-					if (LitName[i]== part)
+					pos1 = instruction.find_first_of("=");
+					pos2 = instruction.find_last_of("'");
+					part= instruction.substr(pos1,pos2-pos1+1);
+
+					int Index ;
+
+					for(int i=0;i<LitCounter;i++)
 					{
-						Index=i;
-						break;
-					}
-				}
-
-				if(Format4Flag)
-				{
-					nixbpe="110001";
-					Add = LitAdd[Index];
-					Add=SignEX(Add);
-					Add=Add.substr(Add.length()-5);
-
-					Opcode=HexToBin(Opcode);
-					Opcode=Opcode.substr(0,6);
-					string Op_nixbpe=BinToHex(Opcode+nixbpe);
-					MachCode[MachCounter++]=Op_nixbpe+Add;
-				}
-				else
-				{
-					int CheckDisp= HexToInt(LitAdd[Index])-HexToInt(Pc);
-
-				  if ( (CheckDisp <2047)&&(CheckDisp >-2048))
-					{
-						nixbpe="110010";
-						Opcode=HexToBin(Opcode);
-						Opcode=Opcode.substr(0,6);
-						string Op_nixbpe=BinToHex(Opcode+nixbpe);
-
-						Disp= IntToHex(CheckDisp);
-						Disp=Fill(Disp);
-						Disp=Disp.substr(Disp.length()-3);
-						MachCode[MachCounter++]=Op_nixbpe+Disp;
-					}
-					else
-					{
-						nixbpe=nixbpe+"110100";
-						Opcode=HexToBin(Opcode);
-						Opcode=Opcode.substr(0,6);
-						string Op_nixbpe=BinToHex(Opcode+nixbpe);
-
-						Disp= IntToHex(HexToInt(LitAdd[Index])- HexToInt(Base));
-						Disp=Fill(Disp);
-						Disp=Disp.substr(Disp.length()-3);
-						MachCode[MachCounter++]=Op_nixbpe+Disp;
-					}
-				}
-	
-			}
-				else
-				{
-				if ( instruction.find(",")!=string::npos)
-				{
-					pos=instruction.find(",");
-					pos1=instruction.find(Parts[i]);
-					pos1=pos1+Parts[i].length();
-					IndexAdd=1;
-					nixbpe="1";
-					inst=instruction.substr(pos1,pos-pos1);
-				}
-				else
-				{
-					pos1=instruction.find(Parts[i]);
-					pos1=pos1+Parts[i].length();
-					nixbpe="0";
-					inst=instruction.substr(pos1);
-				}
-
-				if (instruction.find("@")!=string::npos)
-				{
-					pos=instruction.find("@");
-					IndAdd=1;
-					nixbpe="10"+nixbpe;
-					inst=instruction.substr(pos+1);
-				}
-				else if ( instruction.find("#")!=string::npos)
-				{
-					pos=instruction.find("#");
-					ImmAdd=1;
-					nixbpe="01"+nixbpe;
-					inst=instruction.substr(pos+1);
-				}
-				else
-				{
-					nixbpe="11"+nixbpe;
-				}
-
-				DelSpace(inst);
-
-
-				if(Format4Flag)
-				{
-					nixbpe=nixbpe+"001";
-					Add = IntToHex(StrToInt(Expression(inst)));
-					Add=SignEX(Add);
-					Add=Add.substr(Add.length()-5);
-
-					Opcode=HexToBin(Opcode);
-					Opcode=Opcode.substr(0,6);
-					string Op_nixbpe=BinToHex(Opcode+nixbpe);
-					MachCode[MachCounter++]=Op_nixbpe+Add;
-				}
-				else
-				{
-
-					int CheckDisp= StrToInt(Expression(inst))-HexToInt(Pc);
-		
-					int Index=-1 ;
-					for (int i=0;i<LabelCounter;i++)
-					{
-						if (Labels[i] == inst)
+						if (LitName[i]== part)
 						{
 							Index=i;
 							break;
 						}
 					}
 
-					
-
-					if ( (CheckDisp <2047)&&(CheckDisp >-2048))
+					if(Format4Flag)
 					{
-						if(ImmAdd)
-						{
-						if(Index==-1)
-						{
-							nixbpe=nixbpe+"000";
-							Disp= IntToHex(StrToInt(Expression(inst)));
-						}
-						else
-						{
-							if(LabMode[Index]==0)
-							{
-								nixbpe=nixbpe+"000";
-								Disp= IntToHex(StrToInt(Expression(inst)));
-							}
-							else
-							{
-								nixbpe=nixbpe+"010";
-								Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Pc));
-							}
-						}
-						goto J1;
-						}
-						nixbpe=nixbpe+"010";
-						Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Pc));
+						nixbpe="110001";
+						Add = LitAdd[Index];
+						Add=SignEX(Add);
+						Add=Add.substr(Add.length()-5);
 
-					J1: Opcode=HexToBin(Opcode);
-						Opcode=Opcode.substr(0,6);
-						string Op_nixbpe=BinToHex(Opcode+nixbpe);
-
-						Disp=Fill(Disp);
-						Disp=Disp.substr(Disp.length()-3);
-						MachCode[MachCounter++]=Op_nixbpe+Disp;
-					}
-					else
-					{
-						if (ImmAdd)
-						{
-						if(Index==-1)
-						{
-							nixbpe=nixbpe+"000";
-							Disp= IntToHex(StrToInt(Expression(inst)));
-						}
-						else
-						{
-							if(LabMode[Index]==false)
-							{
-								nixbpe=nixbpe+"000";
-								Disp= IntToHex(StrToInt(Expression(inst)));
-							}
-							else
-							{
-								nixbpe=nixbpe+"100";
-								Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Base));
-							}
-						}
-						goto J2;
-						}
-						
-						nixbpe=nixbpe+"100";
-					J2: Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Base));
 						Opcode=HexToBin(Opcode);
 						Opcode=Opcode.substr(0,6);
 						string Op_nixbpe=BinToHex(Opcode+nixbpe);
+						MachCode[MachCounter++]=Op_nixbpe+Add;
+					}
+					else
+					{
+						int CheckDisp= HexToInt(LitAdd[Index])-HexToInt(Pc);
 
-						
-						Disp=Fill(Disp);
-						Disp=Disp.substr(Disp.length()-3);
-						MachCode[MachCounter++]=Op_nixbpe+Disp;
+						if ( (CheckDisp <2047)&&(CheckDisp >-2048))
+						{
+							nixbpe="110010";
+							Opcode=HexToBin(Opcode);
+							Opcode=Opcode.substr(0,6);
+							string Op_nixbpe=BinToHex(Opcode+nixbpe);
+
+							Disp= IntToHex(CheckDisp);
+							Disp=Fill(Disp);
+							Disp=Disp.substr(Disp.length()-3);
+							MachCode[MachCounter++]=Op_nixbpe+Disp;
+						}
+						else
+						{
+							nixbpe=nixbpe+"110100";
+							Opcode=HexToBin(Opcode);
+							Opcode=Opcode.substr(0,6);
+							string Op_nixbpe=BinToHex(Opcode+nixbpe);
+
+							Disp= IntToHex(HexToInt(LitAdd[Index])- HexToInt(Base));
+							Disp=Fill(Disp);
+							Disp=Disp.substr(Disp.length()-3);
+							MachCode[MachCounter++]=Op_nixbpe+Disp;
+						}
 					}
 
-					
 				}
+				else
+				{
+					if ( instruction.find(",")!=string::npos)
+					{
+						pos=instruction.find(",");
+						pos1=instruction.find(Parts[i]);
+						pos1=pos1+Parts[i].length();
+						IndexAdd=1;
+						nixbpe="1";
+						inst=instruction.substr(pos1,pos-pos1);
+					}
+					else
+					{
+						pos1=instruction.find(Parts[i]);
+						pos1=pos1+Parts[i].length();
+						nixbpe="0";
+						inst=instruction.substr(pos1);
+					}
+
+					if (instruction.find("@")!=string::npos)
+					{
+						pos=instruction.find("@");
+						IndAdd=1;
+						nixbpe="10"+nixbpe;
+						inst=instruction.substr(pos+1);
+					}
+					else if ( instruction.find("#")!=string::npos)
+					{
+						pos=instruction.find("#");
+						ImmAdd=1;
+						nixbpe="01"+nixbpe;
+						inst=instruction.substr(pos+1);
+					}
+					else
+					{
+						nixbpe="11"+nixbpe;
+					}
+
+					DelSpace(inst);
+
+
+					if(Format4Flag)
+					{
+						nixbpe=nixbpe+"001";
+						Add = IntToHex(StrToInt(Expression(inst)));
+						Add=SignEX(Add);
+						Add=Add.substr(Add.length()-5);
+
+						Opcode=HexToBin(Opcode);
+						Opcode=Opcode.substr(0,6);
+						string Op_nixbpe=BinToHex(Opcode+nixbpe);
+						MachCode[MachCounter++]=Op_nixbpe+Add;
+					}
+					else
+					{
+
+						int CheckDisp= StrToInt(Expression(inst))-HexToInt(Pc);
+
+						int Index=-1 ;
+						for (int i=0;i<LabelCounter;i++)
+						{
+							if (Labels[i] == inst)
+							{
+								Index=i;
+								break;
+							}
+						}
+
+
+
+						if ( (CheckDisp <2047)&&(CheckDisp >-2048))
+						{
+							if(ImmAdd)
+							{
+								if(Index==-1)
+								{
+									nixbpe=nixbpe+"000";
+									Disp= IntToHex(StrToInt(Expression(inst)));
+								}
+								else
+								{
+									if(LabMode[Index]==0)
+									{
+										nixbpe=nixbpe+"000";
+										Disp= IntToHex(StrToInt(Expression(inst)));
+									}
+									else
+									{
+										nixbpe=nixbpe+"010";
+										Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Pc));
+									}
+								}
+								goto J1;
+							}
+							nixbpe=nixbpe+"010";
+							Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Pc));
+
+J1: Opcode=HexToBin(Opcode);
+							Opcode=Opcode.substr(0,6);
+							string Op_nixbpe=BinToHex(Opcode+nixbpe);
+
+							Disp=Fill(Disp);
+							Disp=Disp.substr(Disp.length()-3);
+							MachCode[MachCounter++]=Op_nixbpe+Disp;
+						}
+						else
+						{
+							if (ImmAdd)
+							{
+								if(Index==-1)
+								{
+									nixbpe=nixbpe+"000";
+									Disp= IntToHex(StrToInt(Expression(inst)));
+								}
+								else
+								{
+									if(LabMode[Index]==false)
+									{
+										nixbpe=nixbpe+"000";
+										Disp= IntToHex(StrToInt(Expression(inst)));
+									}
+									else
+									{
+										nixbpe=nixbpe+"100";
+										Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Base));
+									}
+								}
+								goto J2;
+							}
+
+							nixbpe=nixbpe+"100";
+J2: Disp= IntToHex(StrToInt(Expression(inst))- HexToInt(Base));
+							Opcode=HexToBin(Opcode);
+							Opcode=Opcode.substr(0,6);
+							string Op_nixbpe=BinToHex(Opcode+nixbpe);
+
+
+							Disp=Fill(Disp);
+							Disp=Disp.substr(Disp.length()-3);
+							MachCode[MachCounter++]=Op_nixbpe+Disp;
+						}
+
+
+					}
 				}
 
 
@@ -1119,8 +1119,8 @@ void Pass2(string instruction,string Pc,int index)
 		{
 			if(part=="*"&& i==0)
 			{
-				 int Index ;
-				 part=Parts[i+1];
+				int Index ;
+				part=Parts[i+1];
 
 				for(int i=0;i<LitCounter;i++)
 				{
@@ -1135,128 +1135,128 @@ void Pass2(string instruction,string Pc,int index)
 			}
 			else 
 				if (part=="BASE")
-			{
-			    pos=instruction.find("BASE");
-				pos=pos+4;
-				inst= instruction.substr(pos);
-				DelSpace(inst);DelSpace(inst);
-				if(inst=="*")
 				{
-					Base= Fill(PcArray[index]);
+					pos=instruction.find("BASE");
+					pos=pos+4;
+					inst= instruction.substr(pos);
+					DelSpace(inst);DelSpace(inst);
+					if(inst=="*")
+					{
+						Base= Fill(PcArray[index]);
+					}
+					else
+						Base=IntToHex(StrToInt(Expression(inst)));
+
+					MachCode[MachCounter++]="";
+					break;
 				}
-				else
-					Base=IntToHex(StrToInt(Expression(inst)));
-
-				MachCode[MachCounter++]="";
-				break;
-			}
-			else 
-				if (Parts[i+1]=="BYTE")
-			{
-				if (instruction.find("X'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-			    pos2 = instruction.find_last_of("'");
-			    part= instruction.substr(pos1+1,pos2-pos1-1);
-				DelSpace(part);
-				MachCode[MachCounter++]=part;
-				
-			}
-		    else if(instruction.find("C'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-				pos2 = instruction.find_last_of("'");
-				inst= instruction.substr(pos1+1,pos2-pos1-1);
-
-				string Value,Val;
-						int hex;
-						for(int i=0;i<inst.length();i++)
+				else 
+					if (Parts[i+1]=="BYTE")
+					{
+						if (instruction.find("X'")!= string::npos)
 						{
-							Val= inst.substr(i,1);
-							hex=Val[0];
-							Val =IntToHex(hex);
+							pos1 = instruction.find_first_of("'");
+							pos2 = instruction.find_last_of("'");
+							part= instruction.substr(pos1+1,pos2-pos1-1);
+							DelSpace(part);
+							MachCode[MachCounter++]=part;
+
+						}
+						else if(instruction.find("C'")!= string::npos)
+						{
+							pos1 = instruction.find_first_of("'");
+							pos2 = instruction.find_last_of("'");
+							inst= instruction.substr(pos1+1,pos2-pos1-1);
+
+							string Value,Val;
+							int hex;
+							for(int i=0;i<inst.length();i++)
+							{
+								Val= inst.substr(i,1);
+								hex=Val[0];
+								Val =IntToHex(hex);
+								if(Val.length()==1)
+									Val="0"+Val;
+								Value=Value+Val;
+
+
+							}
+							MachCode[MachCounter++]=Value;
+						}
+						else
+						{
+							string Val = Parts[i+2];
+							Val= IntToHex(StrToInt(Val));
+
 							if(Val.length()==1)
 								Val="0"+Val;
-							Value=Value+Val;
 
-				
+							MachCode[MachCounter++]=Val;
 						}
-						MachCode[MachCounter++]=Value;
-			}
-			else
-			{
-				string Val = Parts[i+2];
-				Val= IntToHex(StrToInt(Val));
-				
-			   if(Val.length()==1)
-				  Val="0"+Val;
 
-				MachCode[MachCounter++]=Val;
-			}
-
-			break;
-			}
-				else
+						break;
+					}
+					else
 						if (Parts[i+1]=="WORD")
-			{
-				if (instruction.find("X'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-			    pos2 = instruction.find_last_of("'");
-			    part= instruction.substr(pos1+1,pos2-pos1-1);
-				DelSpace(part);
-				part=part+"000000";
-				part=part.substr(0,6);
-				MachCode[MachCounter++]=part;
-				
-			}
-		    else if(instruction.find("C'")!= string::npos)
-			{
-				pos1 = instruction.find_first_of("'");
-				pos2 = instruction.find_last_of("'");
-				inst= instruction.substr(pos1+1,pos2-pos1-1);
-
-				string Value,Val;
-						int hex;
-						for(int i=0;i<inst.length();i++)
 						{
-							Val= inst.substr(i,1);
-							hex=Val[0];
-							Val =IntToHex(hex);
-							if(Val.length()==1)
-								Val="0"+Val;
-							Value=Value+Val;
+							if (instruction.find("X'")!= string::npos)
+							{
+								pos1 = instruction.find_first_of("'");
+								pos2 = instruction.find_last_of("'");
+								part= instruction.substr(pos1+1,pos2-pos1-1);
+								DelSpace(part);
+								part=part+"000000";
+								part=part.substr(0,6);
+								MachCode[MachCounter++]=part;
 
-				
+							}
+							else if(instruction.find("C'")!= string::npos)
+							{
+								pos1 = instruction.find_first_of("'");
+								pos2 = instruction.find_last_of("'");
+								inst= instruction.substr(pos1+1,pos2-pos1-1);
+
+								string Value,Val;
+								int hex;
+								for(int i=0;i<inst.length();i++)
+								{
+									Val= inst.substr(i,1);
+									hex=Val[0];
+									Val =IntToHex(hex);
+									if(Val.length()==1)
+										Val="0"+Val;
+									Value=Value+Val;
+
+
+								}
+
+								Value=Value+"000000";
+								Value=Value.substr(0,6);
+								MachCode[MachCounter++]=Value;
+							}
+							else
+							{
+								string Val = Parts[i+2];
+								Val= IntToHex(StrToInt(Val));
+
+								if(Val.length()==1)
+									Val="0"+Val;
+
+								Val=Val+"000000";
+								Val=Val.substr(0,6);
+								MachCode[MachCounter++]=Val;
+							}
+
+							break;
 						}
-
-						Value=Value+"000000";
-						Value=Value.substr(0,6);
-						MachCode[MachCounter++]=Value;
-			}
-			else
-			{
-				string Val = Parts[i+2];
-				Val= IntToHex(StrToInt(Val));
-				
-			   if(Val.length()==1)
-				  Val="0"+Val;
-
-			   Val=Val+"000000";
-			   Val=Val.substr(0,6);
-				MachCode[MachCounter++]=Val;
-			}
-
-			break;
-			}
-			else
-			{
-				if(i==(Part_count-1))
-				{
-				MachCode[MachCounter++]="";
-				break;
-				}
-			}
+						else
+						{
+							if(i==(Part_count-1))
+							{
+								MachCode[MachCounter++]="";
+								break;
+							}
+						}
 
 		}
 	}
@@ -1279,13 +1279,32 @@ void Object_program()
 	ObProg[ObProgCounter++]= "H^"+StartName+"^"+"000000^"+PcArray[MachCounter];
 	for( int PcTrack = 0; (PcTrack<MachCounter)&&End;)
 	{
-			code="";
-			LEN=0;Len=0;Len1=0;
-			if(Flag)
-			{
-				PcTrack=PcTrack-1;
-				Flag=0;
-			}
+		code="";
+		LEN=0;Len=0;Len1=0;
+		if(Flag)
+		{
+			PcTrack=PcTrack-1;
+			Flag=0;
+		}
+		Pc=PcArray[PcTrack];
+		Mach=MachCode[PcTrack];
+		while(Mach == "")
+		{
+			Mach=MachCode[PcTrack];
+			Pc=PcArray[PcTrack];
+			PcTrack=PcTrack+1;
+			Flag=1;
+		}
+		if(Flag)
+		{
+			PcTrack=PcTrack-1;
+			Flag=0;
+
+		}
+		T="T^"+Pc;
+		while(Len <30)
+		{
+			Flag = 0;
 			Pc=PcArray[PcTrack];
 			Mach=MachCode[PcTrack];
 			while(Mach == "")
@@ -1293,78 +1312,59 @@ void Object_program()
 				Mach=MachCode[PcTrack];
 				Pc=PcArray[PcTrack];
 				PcTrack=PcTrack+1;
-					Flag=1;
+				Flag=1;
 			}
-			if(Flag)
-				{
-					PcTrack=PcTrack-1;
-					Flag=0;
 
-				}
-			T="T^"+Pc;
-			while(Len <30)
+			if(Flag==0)
+				PcTrack=PcTrack+1;
+
+			int count = PcTrack;
+			string temp1;
+			AddTrack=PcArray[PcTrack];
+			temp1=MachCode[PcTrack];
+
+			while(temp1 == "")
 			{
-				Flag = 0;
-				Pc=PcArray[PcTrack];
-				Mach=MachCode[PcTrack];
-				while(Mach == "")
+				count=count+1;
+				AddTrack=PcArray[count];
+				temp1=MachCode[count];
+
+				if (count>=MachCounter)
 				{
-					Mach=MachCode[PcTrack];
-					Pc=PcArray[PcTrack];
-					PcTrack=PcTrack+1;
-					Flag=1;
-				}
-				
-				if(Flag==0)
-					PcTrack=PcTrack+1;
-
-				int count = PcTrack;
-				string temp1;
-				AddTrack=PcArray[PcTrack];
-				temp1=MachCode[PcTrack];
-
-				while(temp1 == "")
-				{
-					count=count+1;
-					AddTrack=PcArray[count];
-					temp1=MachCode[count];
-
-					if (count>=MachCounter)
-					{
-						End=0;
+					End=0;
 					break;
-					
-				}
-					
+
 				}
 
-				Len1=Len1+(HexToInt(AddTrack)- HexToInt(Pc));
-				Len=Len+(Mach.length()/2);
-					
-
-				if (Len>30)
-				{
-					Flag=1;
-					break;
-				}
-
-				code=code+"^"+Mach;
-				LEN=LEN+(Mach.length()/2);
-				if (Len1>30)
-				{
-					Flag=0;
-					break;
-				}
-
-				if (End==0)
-					break;
 			}
-			string Length = IntToHex(LEN);
-			if (Length.length()==1)
-				Length="0"+Length;
-			T=T+"^"+Length+code;
-			cout<<T<<endl;
-			ObProg[ObProgCounter++]=T;
+
+			Len1=Len1+(HexToInt(AddTrack)- HexToInt(Pc));
+			Len=Len+(Mach.length()/2);
+
+
+			if (Len>30)
+			{
+				Flag=1;
+				break;
+			}
+
+			code=code+"^"+Mach;
+			LEN=LEN+(Mach.length()/2);
+			if (Len1>30)
+			{
+				Flag=0;
+				break;
+			}
+
+			if (End==0)
+				break;
+		}
+		string Length = IntToHex(LEN);
+		if (Length.length()==1)
+			Length="0"+Length;
+		T=T+"^"+Length+code;
+		cout<<T<<endl;
+		ObProg[ObProgCounter++]=T;
 
 
 	}
@@ -1383,19 +1383,19 @@ int AddLables(string Label,string pc,int mode)
 	for (int i=0;i<LabelCounter;i++)
 	{
 		if (Labels[i] == Label)
-				{
-					IdIndex=i;
-					break;
-				}
+		{
+			IdIndex=i;
+			break;
+		}
 	}
 
 	if(IdIndex==-1)
-		{
-			Labels[LabelCounter]=Label;
-			LabMode[LabelCounter]=mode;
-			pc=Fill(pc);
-			PcLabels[LabelCounter++]=pc;
-		}
+	{
+		Labels[LabelCounter]=Label;
+		LabMode[LabelCounter]=mode;
+		pc=Fill(pc);
+		PcLabels[LabelCounter++]=pc;
+	}
 	return IdIndex;
 }
 int AddLit(string inst ,string Lit)
@@ -1405,36 +1405,36 @@ int AddLit(string inst ,string Lit)
 	{
 		if (LitName[i] == Lit)
 		{
-					IdIndex=i;
-					break;
+			IdIndex=i;
+			break;
 		}
 	}
 
 	if(IdIndex==-1)
-		{
-			LitName[LitCounter] =Lit;
-		}
+	{
+		LitName[LitCounter] =Lit;
+	}
 	return IdIndex;
 }
 string Expression(string instruction)
-	{
+{
 
-			Stack s; int c=0;
-			string temp;
-			string str[100];
-			string expression;
-			string ExpParts[50];
-			int ExpParts_count=0;
+	Stack s; int c=0;
+	string temp;
+	string str[100];
+	string expression;
+	string ExpParts[50];
+	int ExpParts_count=0;
 
-			for(int i=0; i<instruction.length();i++)
+	for(int i=0; i<instruction.length();i++)
 	{
 		if(instruction[i]=='*'||instruction[i]=='+'||instruction[i]=='/'||instruction[i]=='-'||instruction[i]=='^'||instruction[i]=='%'||instruction[i]=='('||instruction[i]==')')
 		{
 			if (i==0)
 			{
-			ExpParts[ExpParts_count++] =instruction.substr(0,1);
-			instruction=instruction.substr(1);
-			i=-1;
+				ExpParts[ExpParts_count++] =instruction.substr(0,1);
+				instruction=instruction.substr(1);
+				i=-1;
 			}
 			else
 			{
@@ -1487,185 +1487,185 @@ string Expression(string instruction)
 				{
 					ExpParts[ExpParts_count++] = IntToStr(HexToInt(PcLabels[IdIndex]));
 				}
-			
+
 				break;
 			}
 		}
 	}
 
 
-			for (int i=0; i<ExpParts_count ;i++ )
+	for (int i=0; i<ExpParts_count ;i++ )
+	{
+		/*if(ExpParts[i] == ' ')
+		continue;*/
+		if ( ExpParts[i][0]>=48 && ExpParts[i][0]<=58)
+		{
+			str[c++]= ExpParts[i];
+		}
+
+		else
+		{
+			if (ExpParts[i]== "(") 
 			{
-				/*if(ExpParts[i] == ' ')
-				continue;*/
-				if ( ExpParts[i][0]>=48 && ExpParts[i][0]<=58)
-				{
-					str[c++]= ExpParts[i];
-				}
+				s.push(ExpParts[i]);
 
-				else
-				{
-					if (ExpParts[i]== "(") 
-					{
-						s.push(ExpParts[i]);
-
-					}
-
-					else if (ExpParts[i]== ")")
-					{
-						temp = s.pop();
-						while (temp != "(" )
-						{
-							str[c++]= temp;
-							temp = s.pop();
-						}
-					}
-
-
-					else if (ExpParts[i]== "^")
-					{
-					
-						while ( (s.topEl() == "^") && (s.topEl()!="(") )
-						{
-							temp = s.pop();
-							str[c++]= temp;
-						}
-							s.push(ExpParts[i]);
-
-					}
-
-					else if ((ExpParts[i]== "*")||(ExpParts[i]== "/")||(ExpParts[i]== "%"))
-					{
-
-						while ( (s.topEl() == "^" || s.topEl() == "*" || s.topEl() == "/"|| s.topEl() == "%") && (s.topEl()!="(") )
-						{
-							temp = s.pop();
-							str[c++]= temp;
-						}
-							s.push(ExpParts[i]);
-					}
-
-
-
-
-					else if ((ExpParts[i]== "+")||(ExpParts[i]== "-"))
-					{
-						while ( (s.topEl() == "^" || s.topEl() == "*" || s.topEl() == "/" || s.topEl() == "%" || s.topEl() == "+" || s.topEl() == "-") && (s.topEl()!="(") )
-						{
-							temp = s.pop();
-							str[c++]= temp;
-						}
-							s.push(ExpParts[i]);
-					}
-				}
 			}
 
-			while(!(s.isEmpty()))
+			else if (ExpParts[i]== ")")
 			{
 				temp = s.pop();
-				str[c++]= temp; 
-			}
-
-		/*	for (int i=0;i<c;i++)
-			{
-				cout<<str[i];
-			}*/
-	
-
-     	Stack s1; int count, x1,x2,res;
-
-	        
-			for (int i=0; i<c;i++ )
-			{
-				if(str[i] == " ")
-				continue;
-				if ( str[i][0]>=48 && str[i][0]<=58)
+				while (temp != "(" )
 				{
-					s1.push(str[i]);
-				}
-
-				else
-				{
-					if (str[i]=="^")
-					{
-						res=1;
-
-						x2 = StrToInt(s1.pop());
-						x1 = StrToInt(s1.pop());
-					
-						for ( count =0; count<x2; count++ )
-							res*=x1;
-	
-							s1.push(IntToStr(res));
-					}
-
-					else if (str[i]=="%")
-					{
-						x2 = StrToInt(s1.pop());
-						x1 = StrToInt(s1.pop());
-
-						res= x1 % x2;
-
-						s1.push(IntToStr(res));
-
-					}
-						
-					else if (str[i]=="*")
-					{
-						x2 = StrToInt(s1.pop());
-						x1 = StrToInt(s1.pop());
-
-						res= x1 * x2;
-
-						s1.push(IntToStr(res));
-
-					}
-
-
-					else if (str[i]=="/")
-					{
-						x2 = StrToInt(s1.pop());
-						x1 = StrToInt(s1.pop());
-
-						res= x1 / x2;
-
-						s1.push(IntToStr(res));
-
-					}
-
-
-					else if (str[i]=="+")
-					{
-
-						x2 = StrToInt(s1.pop());
-						x1 = StrToInt(s1.pop());
-
-						res= x1 + x2;
-
-						s1.push(IntToStr(res));
-
-					}
-
-					else if (str[i]=="-")
-					{
-						x2 = StrToInt(s1.pop());
-						x1 = StrToInt(s1.pop());
-
-						res= x1 - x2;
-
-						s1.push(IntToStr(res));
-
-					}
-
-					
+					str[c++]= temp;
+					temp = s.pop();
 				}
 			}
 
-			string FinalVal=s1.pop();
 
-			return FinalVal ;
+			else if (ExpParts[i]== "^")
+			{
+
+				while ( (s.topEl() == "^") && (s.topEl()!="(") )
+				{
+					temp = s.pop();
+					str[c++]= temp;
+				}
+				s.push(ExpParts[i]);
+
+			}
+
+			else if ((ExpParts[i]== "*")||(ExpParts[i]== "/")||(ExpParts[i]== "%"))
+			{
+
+				while ( (s.topEl() == "^" || s.topEl() == "*" || s.topEl() == "/"|| s.topEl() == "%") && (s.topEl()!="(") )
+				{
+					temp = s.pop();
+					str[c++]= temp;
+				}
+				s.push(ExpParts[i]);
+			}
+
+
+
+
+			else if ((ExpParts[i]== "+")||(ExpParts[i]== "-"))
+			{
+				while ( (s.topEl() == "^" || s.topEl() == "*" || s.topEl() == "/" || s.topEl() == "%" || s.topEl() == "+" || s.topEl() == "-") && (s.topEl()!="(") )
+				{
+					temp = s.pop();
+					str[c++]= temp;
+				}
+				s.push(ExpParts[i]);
+			}
+		}
+	}
+
+	while(!(s.isEmpty()))
+	{
+		temp = s.pop();
+		str[c++]= temp; 
+	}
+
+	/*	for (int i=0;i<c;i++)
+	{
+	cout<<str[i];
+	}*/
+
+
+	Stack s1; int count, x1,x2,res;
+
+
+	for (int i=0; i<c;i++ )
+	{
+		if(str[i] == " ")
+			continue;
+		if ( str[i][0]>=48 && str[i][0]<=58)
+		{
+			s1.push(str[i]);
+		}
+
+		else
+		{
+			if (str[i]=="^")
+			{
+				res=1;
+
+				x2 = StrToInt(s1.pop());
+				x1 = StrToInt(s1.pop());
+
+				for ( count =0; count<x2; count++ )
+					res*=x1;
+
+				s1.push(IntToStr(res));
+			}
+
+			else if (str[i]=="%")
+			{
+				x2 = StrToInt(s1.pop());
+				x1 = StrToInt(s1.pop());
+
+				res= x1 % x2;
+
+				s1.push(IntToStr(res));
+
+			}
+
+			else if (str[i]=="*")
+			{
+				x2 = StrToInt(s1.pop());
+				x1 = StrToInt(s1.pop());
+
+				res= x1 * x2;
+
+				s1.push(IntToStr(res));
+
+			}
+
+
+			else if (str[i]=="/")
+			{
+				x2 = StrToInt(s1.pop());
+				x1 = StrToInt(s1.pop());
+
+				res= x1 / x2;
+
+				s1.push(IntToStr(res));
+
+			}
+
+
+			else if (str[i]=="+")
+			{
+
+				x2 = StrToInt(s1.pop());
+				x1 = StrToInt(s1.pop());
+
+				res= x1 + x2;
+
+				s1.push(IntToStr(res));
+
+			}
+
+			else if (str[i]=="-")
+			{
+				x2 = StrToInt(s1.pop());
+				x1 = StrToInt(s1.pop());
+
+				res= x1 - x2;
+
+				s1.push(IntToStr(res));
+
+			}
+
 
 		}
+	}
+
+	string FinalVal=s1.pop();
+
+	return FinalVal ;
+
+}
 string RegNum(string R)
 {
 	if(R=="A")
@@ -1690,12 +1690,12 @@ string RegNum(string R)
 }
 void StrFilter(string s)
 {
-	
-		while ( !InputFile.eof())
-		{
-			getline(InputFile,s);
 
-			if(  s == "")
+	while ( !InputFile.eof())
+	{
+		getline(InputFile,s);
+
+		if(  s == "")
 			continue;
 		if(  s == "	")
 			continue;
@@ -1709,35 +1709,35 @@ void StrFilter(string s)
 			DelSpace(Temp);
 			DelSpace(Temp);
 			if ( Temp=="")
-			continue;
+				continue;
 		}
 
 		if(  s.find("//") != string::npos || s.find(";") != string::npos ||s.find(";;") != string::npos || s.find("!_!_!") != string::npos)
 		{
-			
-				if(s.find("!_!_!") >1)
-				{
-					int pos = s.find("!_!_!");
-					s=s.substr(0,pos);
-					string Temp=s;
-					DelSpace(Temp);
-					DelSpace(Temp);
-					if (Temp=="")
-						continue;
-				}
-					else
-						continue;
+
+			if(s.find("!_!_!") >1)
+			{
+				int pos = s.find("!_!_!");
+				s=s.substr(0,pos);
+				string Temp=s;
+				DelSpace(Temp);
+				DelSpace(Temp);
+				if (Temp=="")
+					continue;
+			}
+			else
+				continue;
 
 		}
 
-//===========================================================================================
-///==========================================================================================
-					
-							CodeArray[Counter++]=s;
-						
-						
-	
-		}
+		//===========================================================================================
+		///==========================================================================================
+
+		CodeArray[Counter++]=s;
+
+
+
+	}
 
 }
 void OPCODETABLE()
@@ -1761,216 +1761,216 @@ void OPCODETABLE()
 void Del_(string &s)
 {
 	for ( int i=0 ; i < s.length() ; i++)
-				{
-					int pos;
+	{
+		int pos;
 
-					if (s.find("_")!= string::npos)
-					{
-						pos= s.find("_");
-						s=s.erase(pos,1);
-					}
-					
-				}
-	
+		if (s.find("_")!= string::npos)
+		{
+			pos= s.find("_");
+			s=s.erase(pos,1);
+		}
+
+	}
+
 }
 void  DelSpace(string &s)
 {
 	int pos;
 	for ( int i=0 ; i<s.length();i++)
-				{
-					if (s.find(" ")!= string::npos)
-					{
-						pos= s.find(" ");
-						s=s.erase(pos,1);
-					}
-					
-				}
+	{
+		if (s.find(" ")!= string::npos)
+		{
+			pos= s.find(" ");
+			s=s.erase(pos,1);
+		}
+
+	}
 	for ( int i=0 ; i<s.length();i++)
-				{
-					if (s.find("	")!= string::npos)
-					{
-						pos= s.find("	");
-						s=s.erase(pos,1);
-					}
-					
-				}
+	{
+		if (s.find("	")!= string::npos)
+		{
+			pos= s.find("	");
+			s=s.erase(pos,1);
+		}
+
+	}
 	for ( int i=0 ; i<s.length();i++)
-				{
-					if (s.find("\t")!= string::npos)
-					{
-						pos= s.find("\t");
-						s=s.erase(pos,1);
-					}
-					
-				}
+	{
+		if (s.find("\t")!= string::npos)
+		{
+			pos= s.find("\t");
+			s=s.erase(pos,1);
+		}
+
+	}
 }
 string IntToHex( int i )
-  {
-	 std::ostringstream Hex;
-      Hex << std::hex << i;
-	  //cout<<hex<<showbase<<10;
-     string s = Hex.str();
-	 s= ToUpper(s);  
-	  return s;
-  }
+{
+	std::ostringstream Hex;
+	Hex << std::hex << i;
+	//cout<<hex<<showbase<<10;
+	string s = Hex.str();
+	s= ToUpper(s);  
+	return s;
+}
 string IntToStr( int n )
-  {
-  std::ostringstream result;
-  result << n;
-  return result.str();
+{
+	std::ostringstream result;
+	result << n;
+	return result.str();
 }
 int HexToInt( string s )
-  {
-	  int i;
-	  stringstream convert ;
-	  convert= (stringstream)s;
-	  convert>> std::hex >> i;
-	  
-	  return i;
-  }
+{
+	int i;
+	stringstream convert ;
+	convert= (stringstream)s;
+	convert>> std::hex >> i;
+
+	return i;
+}
 int StrToInt(string in) 
 {    
 	int ret_val = 0;    
-std::stringstream sstr(in);    
-sstr >> ret_val;    
-return ret_val;
+	std::stringstream sstr(in);    
+	sstr >> ret_val;    
+	return ret_val;
 }
 string HexToBin( string hexNumber) 
 { 
-   std::string binaryNum; 
-    
-   for (int i = 0; i <= hexNumber.length() ; i++) 
-   { 
-      if (hexNumber.substr(i,1) == "0") 
-         binaryNum  += "0000"; 
-      if (hexNumber.substr(i,1) == "1") 
-         binaryNum  += "0001"; 
-      if (hexNumber.substr(i,1) == "2") 
-         binaryNum  += "0010"; 
-      if (hexNumber.substr(i,1) == "3") 
-         binaryNum  += "0011"; 
-      if (hexNumber.substr(i,1) == "4") 
-         binaryNum  += "0100"; 
-      if (hexNumber.substr(i,1) == "5") 
-         binaryNum  += "0101"; 
-      if (hexNumber.substr(i,1) == "6") 
-         binaryNum  += "0110"; 
-      if (hexNumber.substr(i,1) == "7") 
-         binaryNum  += "0111"; 
-      if (hexNumber.substr(i,1) == "8") 
-         binaryNum  += "1000"; 
-      if (hexNumber.substr(i,1) == "9") 
-         binaryNum  += "1001"; 
-      if (hexNumber.substr(i,1) == "a"||hexNumber.substr(i,1) == "A") 
-         binaryNum  += "1010"; 
-      if (hexNumber.substr(i,1) == "b"||hexNumber.substr(i,1) == "B") 
-         binaryNum  += "1011"; 
-      if (hexNumber.substr(i,1) == "c"||hexNumber.substr(i,1) == "C") 
-         binaryNum  += "1100"; 
-      if (hexNumber.substr(i,1) == "d"||hexNumber.substr(i,1) == "D") 
-         binaryNum  += "1101"; 
-      if (hexNumber.substr(i,1) == "e"||hexNumber.substr(i,1) == "E") 
-         binaryNum  += "1110"; 
-      if (hexNumber.substr(i,1) == "f"||hexNumber.substr(i,1) == "F") 
-         binaryNum  += "1111"; 
-   } 
-   return binaryNum; 
+	std::string binaryNum; 
+
+	for (int i = 0; i <= hexNumber.length() ; i++) 
+	{ 
+		if (hexNumber.substr(i,1) == "0") 
+			binaryNum  += "0000"; 
+		if (hexNumber.substr(i,1) == "1") 
+			binaryNum  += "0001"; 
+		if (hexNumber.substr(i,1) == "2") 
+			binaryNum  += "0010"; 
+		if (hexNumber.substr(i,1) == "3") 
+			binaryNum  += "0011"; 
+		if (hexNumber.substr(i,1) == "4") 
+			binaryNum  += "0100"; 
+		if (hexNumber.substr(i,1) == "5") 
+			binaryNum  += "0101"; 
+		if (hexNumber.substr(i,1) == "6") 
+			binaryNum  += "0110"; 
+		if (hexNumber.substr(i,1) == "7") 
+			binaryNum  += "0111"; 
+		if (hexNumber.substr(i,1) == "8") 
+			binaryNum  += "1000"; 
+		if (hexNumber.substr(i,1) == "9") 
+			binaryNum  += "1001"; 
+		if (hexNumber.substr(i,1) == "a"||hexNumber.substr(i,1) == "A") 
+			binaryNum  += "1010"; 
+		if (hexNumber.substr(i,1) == "b"||hexNumber.substr(i,1) == "B") 
+			binaryNum  += "1011"; 
+		if (hexNumber.substr(i,1) == "c"||hexNumber.substr(i,1) == "C") 
+			binaryNum  += "1100"; 
+		if (hexNumber.substr(i,1) == "d"||hexNumber.substr(i,1) == "D") 
+			binaryNum  += "1101"; 
+		if (hexNumber.substr(i,1) == "e"||hexNumber.substr(i,1) == "E") 
+			binaryNum  += "1110"; 
+		if (hexNumber.substr(i,1) == "f"||hexNumber.substr(i,1) == "F") 
+			binaryNum  += "1111"; 
+	} 
+	return binaryNum; 
 } 
 string BinToHex( string BinNum) 
 { 
-   std::string HexNum; 
-    
-   for (int i = 0; i <= BinNum.length() ; i=i+4) 
-   { 
-      if (BinNum.substr(i,4) == "0000") 
-         HexNum  += "0"; 
-      if (BinNum.substr(i,4) == "0001") 
-         HexNum  += "1"; 
-      if (BinNum.substr(i,4) == "0010") 
-         HexNum  += "2"; 
-      if (BinNum.substr(i,4) == "0011") 
-         HexNum  += "3"; 
-      if (BinNum.substr(i,4) == "0100") 
-         HexNum  += "4"; 
-      if (BinNum.substr(i,4) == "0101") 
-         HexNum  += "5"; 
-      if (BinNum.substr(i,4) == "0110") 
-         HexNum  += "6"; 
-      if (BinNum.substr(i,4) == "0111") 
-         HexNum  += "7"; 
-      if (BinNum.substr(i,4) == "1000") 
-         HexNum  += "8"; 
-      if (BinNum.substr(i,4) == "1001") 
-         HexNum  += "9"; 
-      if (BinNum.substr(i,4) == "1010") 
-         HexNum  += "A"; 
-      if (BinNum.substr(i,4) == "1011") 
-         HexNum  += "B"; 
-      if (BinNum.substr(i,4) == "1100") 
-         HexNum  += "C"; 
-      if (BinNum.substr(i,4) == "1101") 
-         HexNum  += "D"; 
-      if (BinNum.substr(i,4) == "1110") 
-         HexNum  += "E"; 
-      if (BinNum.substr(i,4) == "1111") 
-         HexNum  += "F"; 
-   } 
-   return HexNum; 
+	std::string HexNum; 
+
+	for (int i = 0; i <= BinNum.length() ; i=i+4) 
+	{ 
+		if (BinNum.substr(i,4) == "0000") 
+			HexNum  += "0"; 
+		if (BinNum.substr(i,4) == "0001") 
+			HexNum  += "1"; 
+		if (BinNum.substr(i,4) == "0010") 
+			HexNum  += "2"; 
+		if (BinNum.substr(i,4) == "0011") 
+			HexNum  += "3"; 
+		if (BinNum.substr(i,4) == "0100") 
+			HexNum  += "4"; 
+		if (BinNum.substr(i,4) == "0101") 
+			HexNum  += "5"; 
+		if (BinNum.substr(i,4) == "0110") 
+			HexNum  += "6"; 
+		if (BinNum.substr(i,4) == "0111") 
+			HexNum  += "7"; 
+		if (BinNum.substr(i,4) == "1000") 
+			HexNum  += "8"; 
+		if (BinNum.substr(i,4) == "1001") 
+			HexNum  += "9"; 
+		if (BinNum.substr(i,4) == "1010") 
+			HexNum  += "A"; 
+		if (BinNum.substr(i,4) == "1011") 
+			HexNum  += "B"; 
+		if (BinNum.substr(i,4) == "1100") 
+			HexNum  += "C"; 
+		if (BinNum.substr(i,4) == "1101") 
+			HexNum  += "D"; 
+		if (BinNum.substr(i,4) == "1110") 
+			HexNum  += "E"; 
+		if (BinNum.substr(i,4) == "1111") 
+			HexNum  += "F"; 
+	} 
+	return HexNum; 
 } 
 string ToUpper( string s) 
 { 
 	string Uper;
-    
-   for (int i = 0; i <= s.length() ; i++) 
-   {
 
-	   if (s.substr(i,1) == "0") 
-         Uper  += "0"; 
-	   if (s.substr(i,1) == "1") 
-         Uper  += "1"; 
-	   if (s.substr(i,1) == "2") 
-         Uper  += "2"; 
-	   if (s.substr(i,1) == "3") 
-         Uper  += "3"; 
-	   if (s.substr(i,1) == "4") 
-         Uper  += "4"; 
-	   if (s.substr(i,1) == "5") 
-         Uper  += "5"; 
-	   if (s.substr(i,1) == "6") 
-         Uper  += "6"; 
-	   if (s.substr(i,1) == "7") 
-         Uper  += "7"; 
-	   if (s.substr(i,1) == "8") 
-         Uper  += "8"; 
-	   if (s.substr(i,1) == "9") 
-         Uper  += "9"; 
-	   if (s.substr(i,1) == "a") 
-         Uper  += "A"; 
-	   if (s.substr(i,1) == "b") 
-         Uper  += "B"; 
-	   if (s.substr(i,1) == "c") 
-         Uper  += "C"; 
-	   if (s.substr(i,1) == "d") 
-         Uper  += "D"; 
-	   if (s.substr(i,1) == "e") 
-         Uper  += "E"; 
-	   if (s.substr(i,1) == "f") 
-         Uper  += "F"; 
-	   if (s.substr(i,1) == "A") 
-         Uper  += "A";
-	   if (s.substr(i,1) == "B") 
-         Uper  += "B"; 
-	   if (s.substr(i,1) == "C") 
-         Uper  += "C"; 
-	   if (s.substr(i,1) == "D") 
-         Uper  += "D"; 
-	   if (s.substr(i,1) == "E") 
-         Uper  += "E"; 
-	   if (s.substr(i,1) == "F") 
-         Uper  += "F"; 
-      
-   }
-   return Uper;
+	for (int i = 0; i <= s.length() ; i++) 
+	{
+
+		if (s.substr(i,1) == "0") 
+			Uper  += "0"; 
+		if (s.substr(i,1) == "1") 
+			Uper  += "1"; 
+		if (s.substr(i,1) == "2") 
+			Uper  += "2"; 
+		if (s.substr(i,1) == "3") 
+			Uper  += "3"; 
+		if (s.substr(i,1) == "4") 
+			Uper  += "4"; 
+		if (s.substr(i,1) == "5") 
+			Uper  += "5"; 
+		if (s.substr(i,1) == "6") 
+			Uper  += "6"; 
+		if (s.substr(i,1) == "7") 
+			Uper  += "7"; 
+		if (s.substr(i,1) == "8") 
+			Uper  += "8"; 
+		if (s.substr(i,1) == "9") 
+			Uper  += "9"; 
+		if (s.substr(i,1) == "a") 
+			Uper  += "A"; 
+		if (s.substr(i,1) == "b") 
+			Uper  += "B"; 
+		if (s.substr(i,1) == "c") 
+			Uper  += "C"; 
+		if (s.substr(i,1) == "d") 
+			Uper  += "D"; 
+		if (s.substr(i,1) == "e") 
+			Uper  += "E"; 
+		if (s.substr(i,1) == "f") 
+			Uper  += "F"; 
+		if (s.substr(i,1) == "A") 
+			Uper  += "A";
+		if (s.substr(i,1) == "B") 
+			Uper  += "B"; 
+		if (s.substr(i,1) == "C") 
+			Uper  += "C"; 
+		if (s.substr(i,1) == "D") 
+			Uper  += "D"; 
+		if (s.substr(i,1) == "E") 
+			Uper  += "E"; 
+		if (s.substr(i,1) == "F") 
+			Uper  += "F"; 
+
+	}
+	return Uper;
 } 
 void TwoComp(string &s)
 {
@@ -2017,34 +2017,34 @@ string SignEX( string s)
 	s= HexToBin(s);
 	if (s[0]=='0')
 	{
-	s= BinToHex(s);
-	if(s.length()==0)
-		s="000000";
-	else if (s.length()==1)
-		s="00000"+s;
-	else if (s.length()==2)
-		s="0000"+s;
-	else if (s.length()==3)
-		s="000"+s;
-	else if (s.length()==4)
-		s="00"+s;
-	else if (s.length()==5)
-		s="0"+s;
+		s= BinToHex(s);
+		if(s.length()==0)
+			s="000000";
+		else if (s.length()==1)
+			s="00000"+s;
+		else if (s.length()==2)
+			s="0000"+s;
+		else if (s.length()==3)
+			s="000"+s;
+		else if (s.length()==4)
+			s="00"+s;
+		else if (s.length()==5)
+			s="0"+s;
 
 	}
 	else if (s[0]=='1')
 	{
 		s= BinToHex(s);
-	 if (s.length()==1)
-		s="FFFFF"+s;
-	else if (s.length()==2)
-		s="FFFF"+s;
-	else if (s.length()==3)
-		s="FFF"+s;
-	else if (s.length()==4)
-		s="FF"+s;
-	else if (s.length()==5)
-		s="F"+s;
+		if (s.length()==1)
+			s="FFFFF"+s;
+		else if (s.length()==2)
+			s="FFFF"+s;
+		else if (s.length()==3)
+			s="FFF"+s;
+		else if (s.length()==4)
+			s="FF"+s;
+		else if (s.length()==5)
+			s="F"+s;
 	}
 
 	return s;

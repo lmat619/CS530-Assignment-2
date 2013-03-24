@@ -205,7 +205,8 @@ void Pass1(char* fName){
         //is this the START directive?
         if(StrPos(strLine.c_str(), " START ")){
             //extract starting address
-            while(strcmp(token, "START")) token = strtok(NULL, " ");
+            while(strcmp(token, "START")) 
+				token = strtok(NULL, " ");
             token = strtok(NULL, " ");
             String foo = ("0x" + String(token));
             sscanf(foo.c_str(), "%x", &progStartAddr);
@@ -332,7 +333,8 @@ void Pass2(char* fName){
     int textAddr = 0;
     int LTORG_Num = 0;
 
-    while(bufPtr < fileLength){
+    while(bufPtr < fileLength)
+	{
         //read in a line from the buffer
         thisLine[0] = ' '; thisLine[1] = 0;
         linePtr = 1;
