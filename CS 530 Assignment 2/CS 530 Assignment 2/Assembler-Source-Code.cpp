@@ -125,6 +125,7 @@ public:
 };
 
 #endif
+
 string CodeArray[1000];		// which readed from input file and saved into this array [assemply code holding]
 string PcArray[1000];		// which we save the pc in it, for every assembly instruction.
 string OPCODE[60];			//mapping for every mnemonic[lda,sta,..etc]+ (opcode <==> Format) 

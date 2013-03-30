@@ -18,9 +18,16 @@ int main(int argc, char* argv[])
 		cout << "Please type in the file path of a SIC Basic or XE source code" << endl;
 		getline(cin, filePath);
 	}*/
-	filePath = "C:\\Users\\Louie\\Desktop\\CS 530 Assignment 2 Help\\assembleTest.txt";
+	filePath = ".\\assembleTest.txt";
 	LoadDictionary();
-	Pass1(filePath);
+	try
+	{
+		Pass1(filePath);
+	}
+	catch (char *error)
+	{
+		printf("Error: %s", error);
+	}
 
 	system("PAUSE");
 }

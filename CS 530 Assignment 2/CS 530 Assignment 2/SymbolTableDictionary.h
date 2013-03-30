@@ -10,6 +10,7 @@ struct Symbol
 {
 	std::string Name;
 	int Address;
+	int Value;
 
 	Symbol::Symbol()
 	{ }

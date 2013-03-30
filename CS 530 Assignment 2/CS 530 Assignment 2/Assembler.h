@@ -11,7 +11,7 @@ void Pass2(std::string Path);
 void GetLabel(char* dest, char* line);
 void GetOpCode(char* dest, char* line);
 void GetOperand(char* dest, char* line);
-int StringToInt(char* string);
+int stringToInt(char* string);
 void TrimEnd(char *string);
 void RemoveEndApostrophe(char *string);
 void RemoveOperandType(char *string);
