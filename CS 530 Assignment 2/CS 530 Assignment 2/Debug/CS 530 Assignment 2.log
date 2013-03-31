@@ -1,4 +1,4 @@
-﻿Build started 3/30/2013 12:34:56 AM.
+﻿Build started 3/31/2013 1:29:53 AM.
      1>Project "C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\CS 530 Assignment 2.lastbuildstate".
@@ -16,9 +16,12 @@
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
      1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(143): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(241): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(280): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
+     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(314): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
          Generating Code...
+     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(216): warning C4700: uninitialized local variable 'textRecordStartAddress' used
        ManifestResourceCompile:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\CS 530 Assignment 2.exe.embed.manifest.res" "Debug\CS 530 Assignment 2_manifest.rc" 
        Link:
@@ -53,4 +56,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.24
+Time Elapsed 00:00:02.09

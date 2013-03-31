@@ -338,7 +338,8 @@ void Pass1(const char* fName)
 void Pass2(char* fName)
 {
 	currentPass = 2;
-	if(!buffer) return;
+	if(!buffer) 
+		return;
 	string output;
 	string listing;
 	int bufPtr=0;
@@ -365,18 +366,22 @@ void Pass2(char* fName)
 		while(1)
 		{
 			c = buffer[bufPtr++];
-			if((c == 0xA) || (bufPtr > filelength)) break;
-			if(c >= ' ') thisLine[linePtr++] = c;
+			if((c == 0xA) || (bufPtr > filelength)) 
+				break;
+			if(c >= ' ') 
+				thisLine[linePtr++] = c;
 		}
 		thisLine[linePtr] = ' ';
 		thisLine[linePtr+1] = 0;   //finish line
 		currentLine++;
 
-		if(thisLine[1] == 0) continue;
+		if(thisLine[1] == 0) 
+			continue;
 		string strLine(thisLine);
 
 		char* token = strtok(thisLine, " ");
-		if(!token) continue;
+		if(!token) 
+			continue;
 
 		//is this the START directive?
 		if(StrPos(strLine.c_str(), " START "))
@@ -394,7 +399,8 @@ void Pass2(char* fName)
 			textAddr = progStartAddr;
 			//write out the header record
 			output += "H";
-			if(progName.length() < 6) progName += Ansistring::stringOfChar(' ', 6-progName.length());
+			if(progName.length() < 6) 
+				progName += Ansistring::stringOfChar(' ', 6-progName.length());
 			output += progName;
 			output += IntToHex((int)LOCCTR, 6);
 			output += IntToHex((int)progSize, 6);
@@ -467,7 +473,8 @@ void Pass2(char* fName)
 		}
 
 		//is this a comment line?
-		if(token[0] == '.'){
+		if(token[0] == '.')
+		{
 			//we still want it in the listing
 			listing += string(currentLine) + Ansistring::stringOfChar(' ', 8 - string(currentLine).length()) + "        ";
 			listing += strLine + "\r\n";
@@ -475,7 +482,8 @@ void Pass2(char* fName)
 		}
 
 		//sweet mother of god... we're dumping the literals
-		if(StrPos(strLine.c_str(), " LTORG ")){
+		if(StrPos(strLine.c_str(), " LTORG "))
+		{
 			//put it in the listing
 			listing += string(currentLine) + Ansistring::stringOfChar(' ', 8 - string(currentLine).length()) + "        ";
 			listing += strLine + "\r\n";
@@ -487,7 +495,8 @@ void Pass2(char* fName)
 		char *operand;
 
 		//is the first token an opcode?
-		if(GetOpcodeNum(token) == -1){
+		if(GetOpcodeNum(token) == -1)
+		{
 			//it's a symbol
 			//we'll skip past it, but first make sure it exists
 			if(!GetSymbol(token))
@@ -496,7 +505,9 @@ void Pass2(char* fName)
 			operand = strtok(NULL, " ");
 			if(instruction[0] == 0)
 				throw runtime_error("Unexpected end of line.");
-		}else{
+		}
+		else
+		{
 			//it is an opcode!
 			instruction = token;
 			operand = strtok(NULL, " ");
@@ -508,7 +519,8 @@ void Pass2(char* fName)
 		listing += string(currentLine) + Ansistring::stringOfChar(' ', 8 - string(currentLine).length()) + IntToHex((int)LOCCTR, 4) + "    ";
 		listing += strLine + Ansistring::stringOfChar(' ', 32 - strLine.length()) + instr + "\r\n";
 
-		if((!instr.length()) && asmLine.length()){   //it was a RESB or RESW
+		if((!instr.length()) && asmLine.length())
+		{   //it was a RESB or RESW
 			//end this text record
 			output += "T";
 			output += IntToHex((int)textAddr, 6);
@@ -517,8 +529,11 @@ void Pass2(char* fName)
 			//start new text record
 			asmLine = "";
 			textAddr = LOCCTR;
-		}else{
-			if((asmLine.length() + instr.length()) > 60){
+		}
+		else
+		{
+			if((asmLine.length() + instr.length()) > 60)
+			{
 				//end this text record
 				output += "T";
 				output += IntToHex((int)textAddr, 6);
@@ -527,7 +542,9 @@ void Pass2(char* fName)
 				//start new text record
 				asmLine = instr;
 				textAddr = LOCCTR;
-			}else{
+			}
+			else
+			{
 				asmLine += instr;
 			}
 		}
@@ -538,7 +555,8 @@ void Pass2(char* fName)
 
 	//dump symbols into listing
 	listing += "\r\n\r\nSymbol          Address:\r\n-----------------------\r\n";
-	for(int i=0; i<SYMTAB->size(); i++){
+	for(int i=0; i<SYMTAB->size(); i++)
+	{
 		listing += string(((SIC_Symbol*)SYMTAB->Items[i])->name);
 		listing += Ansistring::stringOfChar(' ', 16 - strlen(((SIC_Symbol*)SYMTAB->Items[i])->name));
 		listing += IntToHex((int)((SIC_Symbol*)SYMTAB->Items[i])->address, 4);
@@ -547,7 +565,8 @@ void Pass2(char* fName)
 
 	//dump literals into listing
 	listing += "\r\nLiteral         Address:\r\n-----------------------\r\n";
-	for(int i=0; i<LITTAB->size(); i++){
+	for(int i=0; i<LITTAB->size(); i++)
+	{
 		listing += string(((SIC_Literal*)LITTAB->Items[i])->name);
 		listing += Ansistring::stringOfChar(' ', 16 - strlen(((SIC_Literal*)LITTAB->Items[i])->name));
 		listing += IntToHex((int)((SIC_Literal*)LITTAB->Items[i])->offsetFromLTORG + (int)LTORGS->Items[(int)((SIC_Literal*)LITTAB->Items[i])->LTORG_Num], 4);
@@ -627,7 +646,8 @@ string ProcessInstruction(int LOCCTR, char* instruction, char* operand)
 {
 	string retStr("");
 	int op = GetOpcodeNum(instruction);
-	if(op == -1){
+	if(op == -1)
+	{
 		if(!strcmp(instruction, "WORD"))
 		{
 			//it's a word, so get its value (simple integer)

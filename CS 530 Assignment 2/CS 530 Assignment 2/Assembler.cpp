@@ -54,7 +54,7 @@ void Pass1(std::string Path)
 			//Check if OpCode is directive
 			if(OpCode == "START")
 			{
-				PC = StartingAddress = stringToInt(Operand);
+				PC = StartingAddress = HexToInt(Operand);
 			}
 			else if (OpCode == "END")
 			{
@@ -62,13 +62,13 @@ void Pass1(std::string Path)
 			}
 			else if (OpCode == "RESB")
 			{
-				int value = stringToInt(Operand);
+				int value = HexToInt(Operand);
 				PC += value;
 			}
 			else if (OpCode == "RESW")
 			{
 				TrimEnd(Operand);
-				int value = stringToInt(Operand);
+				int value = HexToInt(Operand);
 				PC += (value*3);
 			}
 			else if (OpCode == "BYTE")
@@ -115,7 +115,7 @@ void Pass1(std::string Path)
 				}
 				else
 				{
-					PC += stringToInt(Operand);
+					PC += HexToInt(Operand);
 					//Add Symbol (done below)
 				}
 			}
@@ -176,6 +176,68 @@ void Pass1(std::string Path)
 	ProgramLength = PC - StartingAddress;
 }
 
+void Pass2()
+{
+	string output;
+	string textRecord;
+	int textRecordStartAddress;
+	int currentLineIndex;
+	for (currentLineIndex = 0; currentLineIndex <= IndexCount; currentLineIndex++)
+	{
+		int currentPC = PCArray[currentLineIndex];
+		string currentOpCode = OpCodeArray[currentLineIndex];
+		string currentLabel = LabelArray[currentLineIndex];
+		string currentOperand = OperandArray[currentLineIndex];
+		string currentLiteral = LitArray[currentLineIndex];
+
+		if(currentOpCode == "START")
+		{
+			output += "H";
+			if (currentLabel.length() < 6)
+				currentLabel = PadWithZeros(currentLabel, currentLabel.length(), 6);
+			if(currentOperand.length() < 6)
+				currentOperand = PadWithZeros(currentOperand, currentOperand.length(), 6);
+			string progLength = IntToHex(ProgramLength);
+			if(progLength.length() < 6)
+				progLength = PadWithZeros(progLength, progLength.length(), 6) + "\n";
+			output  += currentLabel + currentOperand + progLength;
+			continue;
+		}
+		if(currentOpCode == "END")
+		{
+			//do stuff
+			break;
+		}
+		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral);
+		if((textRecord.length() + objectCode.length()) > 60)
+		{
+			//end this text record
+			output += "T";
+			string startAdd = IntToHex((int)textRecordStartAddress);
+			string recordLength = IntToHex((int)(textRecord.length()/2));
+			if(startAdd.length() < 6)
+				startAdd = PadWithZeros(startAdd, startAdd.length(), 6);
+			if(recordLength.length() < 2)
+				recordLength = PadWithZeros(recordLength, recordLength.length(), 2);
+			output += startAdd + recordLength + textRecord + "\n";
+			//start new text record
+			textRecord = objectCode;
+			textRecordStartAddress = currentPC;
+		}
+		else
+		{
+			textRecord += objectCode;
+		}
+	}
+}
+
+string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral)
+{
+	string objCode;
+	//do stuff
+	return objCode;
+}
+
 void GetLabel(char* dest, char* line)
 {
 	int i;
@@ -184,6 +246,7 @@ void GetLabel(char* dest, char* line)
 	dest[i] = '\0';
 	TrimEnd(dest);
 }
+
 void GetOpCode(char* dest, char* line)
 {
 	int i;
@@ -192,6 +255,7 @@ void GetOpCode(char* dest, char* line)
 	dest[i] = '\0';
 	TrimEnd(dest);
 }
+
 void GetOperand(char* dest, char* line)
 {
 	int i;
@@ -205,9 +269,18 @@ void GetOperand(char* dest, char* line)
 	TrimEnd(dest);
 }
 
-int stringToInt(char* string)
+int HexToInt(char* string)
 {
 	return (int)strtol(string, NULL, 16);
+}
+
+string IntToHex(int num)
+{
+	char* hex = new char[10];
+	sprintf(hex, "%x", num);
+	string hexString(hex);
+	//hexString = ToUpper(hexString);
+	return hexString;
 }
 
 void TrimEnd(char *string)
@@ -239,4 +312,16 @@ void RemoveOperandType(char *string)
 	char *ptr = string;
 	ptr += 2;
 	strcpy(string, ptr);
+}
+
+string PadWithZeros(string str, int strLen, int maxNum)
+{
+	string newString;
+	while(strLen < maxNum)
+	{
+		newString += "0";
+		strLen++;
+	}
+	newString += str;
+	return newString;
 }
