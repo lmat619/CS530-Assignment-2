@@ -3,18 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <map>
+#include <algorithm>
+#include <vector>
 #include "InstructionTableDictionary.h"
 #include "SymbolTableDictionary.h"
 #include "Assembler.h";
 
 using namespace std;
 
-#define READ "r"
-#define MAX_RECORD_SIZE 68
-#define MAX_LABEL_SIZE 8
-#define MAX_OPCODE_SIZE 8
-#define MAX_OPERAND_SIZE 50
-
+MachineType machineType = None;
 int PCArray[500];
 string OpCodeArray[500];
 string LabelArray[500];
@@ -129,13 +126,22 @@ void Pass1(std::string Path)
 				{
 					currentMnemonic = it->second;
 					if(OpCode[0] == '+')
+					{
 						PC += 4;
+						machineType = XE;
+					}
 					else if(currentMnemonic.isFormat1)
+					{
 						PC += 1;
+						machineType = XE;
+					}
 					else if(currentMnemonic.isFormat0 || currentMnemonic.isFormat3)
 						PC += 3;
 					else if(currentMnemonic.isFormat2)
+					{
 						PC += 2;
+						machineType = XE;
+					}
 				}
 				else
 				{
@@ -178,8 +184,8 @@ void Pass1(std::string Path)
 
 void Pass2()
 {
-	string output;
-	string textRecord;
+	string output("");
+	string textRecord("");
 	int textRecordStartAddress;
 	int currentLineIndex;
 	for (currentLineIndex = 0; currentLineIndex <= IndexCount; currentLineIndex++)
@@ -233,9 +239,106 @@ void Pass2()
 
 string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral)
 {
-	string objCode;
-	//do stuff
+	string objCode("");
+	if(currentOpCode == "WORD")
+	{
+	}
+	else if(currentOpCode == "BYTE")
+	{
+	}
+	else if(currentOpCode == "RESW" || currentOpCode == "RESB")
+	{
+	}
+	else
+	{
+		//get from dictionary
+		Mnemonic currentMnemonic;
+		//Check if OpCode exists in table
+		map<std::string, Mnemonic>::iterator it = InstructionTable.find(currentOpCode);
+		//If it exists, process line
+		if(it != InstructionTable.end())
+		{
+			currentMnemonic = it->second;
+			if(currentOpCode[0] == '+')
+			{
+				//format 4
+			}
+			else if(currentMnemonic.isFormat1)
+			{
+				objCode = currentMnemonic.Opcode;
+			}
+			else if(currentMnemonic.isFormat0 || currentMnemonic.isFormat3)
+			{
+			}
+			else if(currentMnemonic.isFormat2)
+			{
+				objCode = currentMnemonic.Opcode;
+				if(currentOperand.find(",") != string::npos)
+				{
+					std::vector<std::string> registers = SplitCommas(currentOperand);
+					int reg1 = GetRegisterNum(registers[0]);
+					int reg2 = GetRegisterNum(registers[1]);
+					if(reg1 == -1 || reg2 == -1)
+					{
+						//report error
+					}
+					string register1 = IntToHex(reg1);
+					string register2 = IntToHex(reg2);
+					objCode += register1 + register2;
+				}
+				else
+				{
+					int reg1 = GetRegisterNum(currentOperand);
+					if(reg1 == -1)
+					{
+						//report error
+					}
+					string register1 = IntToHex(reg1);
+					objCode += register1;
+				}
+			}
+		}
+	}
 	return objCode;
+}
+
+std::vector<std::string> SplitCommas(string operand)
+{
+	std::vector<std::string> registers(2);
+	const char* op = operand.c_str();
+	char* reg1 = new char[10];
+	int i;
+	for(i = 0; op[i] != ','; i++)
+		reg1[i] = op[i];
+	op += ++i;
+	string register1(reg1);
+	string register2(op);
+	registers[0] = register1;
+	registers[1] = register2;
+	return registers;
+}
+
+int GetRegisterNum(string reg)
+{
+	if(reg == "A")
+		return 0;
+	else if(reg == "X")
+		return 1;
+	else if(reg == "L")
+		return 2;
+	else if(reg == "B")
+		return 3;
+	else if(reg == "S")
+		return 4;
+	else if(reg == "T")
+		return 5;
+	else if(reg == "F")
+		return 6;
+	else if(reg == "PC")
+		return 8;
+	else if(reg == "SW")
+		return 9;
+	return -1;
 }
 
 void GetLabel(char* dest, char* line)
@@ -279,7 +382,7 @@ string IntToHex(int num)
 	char* hex = new char[10];
 	sprintf(hex, "%x", num);
 	string hexString(hex);
-	//hexString = ToUpper(hexString);
+	std::transform(hexString.begin(), hexString.end(), hexString.begin(), ::toupper);
 	return hexString;
 }
 
