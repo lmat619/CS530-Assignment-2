@@ -17,6 +17,8 @@ string OpCodeArray[500];
 string LabelArray[500];
 string OperandArray[500];
 string LitArray[500];
+string ModRecArray[500];
+int ModRecordCounter = 0;
 int PC = 0;
 int StartingAddress = 0;
 int IndexCount = -1;
@@ -55,7 +57,7 @@ void Pass1(std::string Path)
 			}
 			
 			//Check if line contains a label
-			if(Label != "")
+			if(strcmp(Label,""))
 			{
 				map<std::string, Symbol>::iterator it = SymbolTable.find(Label);
 				//If it does not exist, add symbol to table
@@ -71,8 +73,12 @@ void Pass1(std::string Path)
 					//throw runtime_error(error);
 				}
 			}
-			
-			if (!strcmp(OpCode, "END"))
+
+			if(!strcmp(OpCode, "START"))
+			{
+				continue;
+			}
+			else if (!strcmp(OpCode, "END"))
 			{
 				break;
 			}
@@ -172,7 +178,6 @@ void Pass1(std::string Path)
 			}
 
 			
-
 			PCArray[IndexCount] = PC;
 			OpCodeArray[IndexCount] = OpCode;
 			LabelArray[IndexCount] = Label;
@@ -266,6 +271,28 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 			if(currentOpCode[0] == '+')
 			{
 				//format 4
+
+				//Add the modification records
+				if (currentOperand.find("#"))
+				{					
+					int foundLabel = -1;
+					for (int i = 0; i < IndexCount ; i++)
+					{
+						if (LabelArray[i] == currentOperand.substr(1, currentOperand.length()))
+						{
+							foundLabel = i;
+							break;
+						}
+					}
+					if (foundLabel != -1)
+					{
+						ModRecArray[ModRecordCounter++] = "M^" + IntToHex(PCArray[foundLabel]) + "^05";
+					}
+				}
+				else
+				{
+					ModRecArray[ModRecordCounter++] = "M^" + IntToHex(currentPC) + "^05";
+				}
 			}
 			else if(currentMnemonic.isFormat1)
 			{
@@ -397,7 +424,7 @@ void TrimEnd(char *string)
 	ptr = ptr + (len - 1);
 	for(int i = len; i > 0 ; i--)
 	{
-		if(*ptr == ' ' || *ptr == '\t')
+		if(*ptr == ' ' || *ptr == '\t' || *ptr == '\n')
 		{
 			*ptr = '\0';
 			ptr--;

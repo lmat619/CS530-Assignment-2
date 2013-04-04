@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		Pass1(filePath);
+		Pass2();
 	}
 	catch (char *error)
 	{
