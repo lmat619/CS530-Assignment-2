@@ -49,26 +49,26 @@ void Pass1(std::string Path)
 			GetOperand(Operand, line);
 
 			//Check if OpCode is directive
-			if(OpCode == "START")
+			if(strcmp(OpCode, "START"))
 			{
 				PC = StartingAddress = HexToInt(Operand);
 			}
-			else if (OpCode == "END")
+			else if (strcmp(OpCode, "END"))
 			{
 				break;
 			}
-			else if (OpCode == "RESB")
+			else if (strcmp(OpCode, "RESB"))
 			{
 				int value = HexToInt(Operand);
 				PC += value;
 			}
-			else if (OpCode == "RESW")
+			else if (strcmp(OpCode, "RESW"))
 			{
 				TrimEnd(Operand);
 				int value = HexToInt(Operand);
 				PC += (value*3);
 			}
-			else if (OpCode == "BYTE")
+			else if (strcmp(OpCode,  "BYTE"))
 			{
 				if(Operand[0] == 'X' && Operand[1] == '\'')
 				{
@@ -86,11 +86,11 @@ void Pass1(std::string Path)
 				else
 					PC += 1;
 			}
-			else if (OpCode == "WORD")
+			else if (strcmp(OpCode, "WORD"))
 			{
 				PC += 3;
 			}
-			else if (OpCode == "EQU")
+			else if (strcmp(OpCode, "EQU"))
 			{
 				if(Operand[0] == 'X' && Operand[1] == '\'')
 				{

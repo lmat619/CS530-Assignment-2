@@ -651,8 +651,9 @@ string ProcessInstruction(int LOCCTR, char* instruction, char* operand)
 		if(!strcmp(instruction, "WORD"))
 		{
 			//it's a word, so get its value (simple integer)
-			if(operand) if(operand[0] == 0)
-				throw runtime_error("Missing operand.");
+			if(operand) 
+				if(operand[0] == 0)
+					throw runtime_error("Missing operand.");
 			//wait... is it a symbol?
 			SIC_Symbol* sym = GetSymbol(operand);
 			int val;
@@ -665,9 +666,11 @@ string ProcessInstruction(int LOCCTR, char* instruction, char* operand)
 		else if(!strcmp(instruction, "BYTE"))
 		{
 			//it's a collection of bytes
-			if(operand) if(operand[0] == 0)
-				throw runtime_error("Missing operand.");
-			if(operand[0] == 'X'){
+			if(operand) 
+				if(operand[0] == 0)
+					throw runtime_error("Missing operand.");
+			if(operand[0] == 'X')
+			{
 				operand += 2;  //go past the letter and the '
 				string val(operand);
 				val = val.substr(1, val.length()-1);
@@ -855,7 +858,8 @@ string ProcessInstruction(int LOCCTR, char* instruction, char* operand)
 			//set bits n and i to 1 by default ?
 			k |= BIT_N_4;
 			k |= BIT_I_4;
-			if(operand){
+			if(operand)
+			{
 				string oper(operand);
 				//is there indexing?
 				if(StrPos(operand, ",X")){
