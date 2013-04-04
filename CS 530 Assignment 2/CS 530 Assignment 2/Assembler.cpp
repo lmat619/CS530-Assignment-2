@@ -162,6 +162,12 @@ void Pass1(std::string Path)
 						PC += 2;
 						machineType = XE;
 					}
+
+					//Check if Operand is literal
+					if(Operand[0] == '=')
+					{
+
+					}
 				}
 				else
 				{
@@ -170,8 +176,6 @@ void Pass1(std::string Path)
 					throw runtime_error(error);
 				}
 			}
-
-			
 
 			PCArray[IndexCount] = PC;
 			OpCodeArray[IndexCount] = OpCode;

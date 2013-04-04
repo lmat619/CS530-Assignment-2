@@ -75,9 +75,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Assembler-Source-Code.cpp" />
     <ClCompile Include="Assembler.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="InstructionTableDictionary.cpp" />
+    <ClCompile Include="sicasm.cpp" />
     <ClCompile Include="SymbolTableDictionary.cpp" />
   </ItemGroup>
   <ItemGroup>
