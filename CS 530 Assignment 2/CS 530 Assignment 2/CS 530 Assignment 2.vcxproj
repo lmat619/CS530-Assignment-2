@@ -75,16 +75,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Assembler-Source-Code.cpp" />
     <ClCompile Include="Assembler.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="InstructionTableDictionary.cpp" />
-    <ClCompile Include="sicasm.cpp" />
+    <ClCompile Include="LiteralTableDictionary.cpp" />
     <ClCompile Include="SymbolTableDictionary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assembler.h" />
     <ClInclude Include="InstructionTableDictionary.h" />
+    <ClInclude Include="LiteralTableDictionary.h" />
     <ClInclude Include="SymbolTableDictionary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

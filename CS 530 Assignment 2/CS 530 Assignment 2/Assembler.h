@@ -9,9 +9,8 @@ using namespace std;
 
 enum MachineType
 {
-	None = 0,
-	Basic = 1,
-	XE = 2
+	Basic = 0,
+	XE = 1
 };
 
 #define READ "r"

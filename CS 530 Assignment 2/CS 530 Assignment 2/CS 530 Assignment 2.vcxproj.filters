@@ -27,11 +27,8 @@
     <ClCompile Include="SymbolTableDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sicasm.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Assembler-Source-Code.cpp">
-      <Filter>Resource Files</Filter>
+    <ClCompile Include="LiteralTableDictionary.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SymbolTableDictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LiteralTableDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

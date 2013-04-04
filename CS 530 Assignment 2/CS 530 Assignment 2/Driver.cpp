@@ -3,10 +3,14 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <algorithm>
+#include <vector>
 #include "InstructionTableDictionary.h"
 #include "Assembler.h";
 
 using namespace std;
+
+string IntToHex(int num);
 
 int main(int argc, char* argv[])
 {
@@ -31,4 +35,13 @@ int main(int argc, char* argv[])
 	}
 
 	system("PAUSE");
+}
+
+string IntToHex(int num)
+{
+	char* hex = new char[10];
+	sprintf(hex, "%x", num);
+	string hexString(hex);
+	std::transform(hexString.begin(), hexString.end(), hexString.begin(), ::toupper);
+	return hexString;
 }

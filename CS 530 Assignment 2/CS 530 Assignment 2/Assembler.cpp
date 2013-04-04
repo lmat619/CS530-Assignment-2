@@ -7,11 +7,12 @@
 #include <vector>
 #include "InstructionTableDictionary.h"
 #include "SymbolTableDictionary.h"
+#include "LiteralTableDictionary.h"
 #include "Assembler.h";
 
 using namespace std;
 
-MachineType machineType = None;
+MachineType machineType = Basic;
 int PCArray[500];
 string OpCodeArray[500];
 string LabelArray[500];
@@ -172,7 +173,36 @@ void Pass1(std::string Path)
 					//Check if Operand is literal
 					if(Operand[0] == '=')
 					{
+						char* OperandCopy = new char[MAX_OPERAND_SIZE];
+						strcpy(OperandCopy, Operand);
+						//Get rid of '='
+						OperandCopy++;
 
+						map<std::string, Literal>::iterator it = LiteralTable.find(OperandCopy);
+						//If it does not exist, add literal to table
+						if(it == LiteralTable.end())
+						{
+							std::string litName(OperandCopy);
+							if(OperandCopy[0] == 'C')
+							{
+								RemoveEndApostrophe(OperandCopy);
+								RemoveOperandType(OperandCopy);
+								int length = strlen(OperandCopy);
+								string op(OperandCopy);
+								string val("");
+								for(int i = 0; i < op.length(); i++)
+									val += IntToHex((int)op[i]);
+								LiteralTable.insert(make_pair(litName, Literal(litName, val, length)));
+							}
+							else if(OperandCopy[0] == 'X')
+							{
+								RemoveEndApostrophe(OperandCopy);
+								RemoveOperandType(OperandCopy);
+								int length = (strlen(OperandCopy) / 2);
+								string val(OperandCopy);
+								LiteralTable.insert(make_pair(litName, Literal(litName, val, length)));
+							}
+						}
 					}
 				}
 				else
@@ -194,6 +224,16 @@ void Pass1(std::string Path)
 			//line is a comment
 		}
 	}
+
+	//Get address values for each literal
+	typedef map<std::string, Literal>::iterator it;
+	for(it iterator = LiteralTable.begin(); iterator != LiteralTable.end(); iterator++)
+	{
+		Literal* lit = &(iterator->second);
+		PC += lit->Length;
+		lit->Address = PC;
+	}
+
 	ProgramLength = PC - StartingAddress;
 }
 
