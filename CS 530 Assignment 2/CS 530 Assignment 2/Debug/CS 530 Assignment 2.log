@@ -1,20 +1,23 @@
-﻿Build started 4/3/2013 7:01:10 PM.
+﻿Build started 4/3/2013 9:04:06 PM.
      1>Project "C:\Program Files (x86)\SmartGitHg 4\bin\CS530-Assignment-2_\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\CS 530 Assignment 2.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Assembler.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Assembler.cpp Driver.cpp
+         Driver.cpp
+     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\driver.cpp(7): warning C4067: unexpected tokens following preprocessor directive - expected a newline
          Assembler.cpp
      1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(29): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(31): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(169): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(175): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(387): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(414): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(421): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(448): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(226): warning C4700: uninitialized local variable 'textRecordStartAddress' used
+         Generating Code...
+     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(231): warning C4700: uninitialized local variable 'textRecordStartAddress' used
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -40,4 +43,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.95
+Time Elapsed 00:00:01.65
