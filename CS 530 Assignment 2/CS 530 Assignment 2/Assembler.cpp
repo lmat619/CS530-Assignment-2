@@ -53,7 +53,26 @@ void Pass1(std::string Path)
 			{
 				PC = StartingAddress = HexToInt(Operand);
 			}
-			else if (strcmp(OpCode, "END"))
+			
+			//Check if line contains a label
+			if(Label != "")
+			{
+				map<std::string, Symbol>::iterator it = SymbolTable.find(Label);
+				//If it does not exist, add symbol to table
+				if(it == SymbolTable.end())
+				{
+					std::string label(Label);
+					SymbolTable.insert(make_pair(label, Symbol(label, PC)));
+				}
+				else
+				{
+					error = "Duplicate labels found: ";
+					//strcat(error, Label);
+					//throw runtime_error(error);
+				}
+			}
+			
+			if (strcmp(OpCode, "END"))
 			{
 				break;
 			}
@@ -151,23 +170,7 @@ void Pass1(std::string Path)
 				}
 			}
 
-			//Check if line contains a label
-			if(Label != "")
-			{
-				map<std::string, Symbol>::iterator it = SymbolTable.find(Label);
-				//If it does not exist, add symbol to table
-				if(it == SymbolTable.end())
-				{
-					std::string label(Label);
-					SymbolTable.insert(make_pair(label, Symbol(label, PC)));
-				}
-				else
-				{
-					error = "Duplicate labels found: ";
-					//strcat(error, Label);
-					//throw runtime_error(error);
-				}
-			}
+			
 
 			PCArray[IndexCount] = PC;
 			OpCodeArray[IndexCount] = OpCode;
