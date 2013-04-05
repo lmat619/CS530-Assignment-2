@@ -189,6 +189,7 @@ void Pass1(std::string Path)
 					//Check if Operand is literal
 					if(Operand[0] == '=')
 					{
+						LitArray[IndexCount] = Operand;
 						char* OperandCopy = new char[MAX_OPERAND_SIZE];
 						strcpy(OperandCopy, Operand);
 						//Get rid of '='
@@ -220,6 +221,8 @@ void Pass1(std::string Path)
 							}
 						}
 					}
+					else
+						LitArray[IndexCount] = "";
 				}
 				else
 				{
@@ -368,7 +371,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 					int foundLabel = -1;
 					for (int i = 0; i < IndexCount ; i++)
 					{
-						if (LabelArray[i] == currentOperand.substr(1, currentOperand.length()))
+						if (LabelArray[i] == currentOperand.substr(1))
 						{
 							foundLabel = i;
 							break;
@@ -390,23 +393,49 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 			}
 			else if(currentMnemonic.isFormat0 || currentMnemonic.isFormat3)
 			{
-				//check if using indexing
-				if(currentOperand.find(","))
-					xbpe += 8;
 				if(machineType == Basic)
 				{
 
 				}
 				else
 				{
+					int disp = 0;
+					map<string, Symbol>::iterator symbolIt;
 					char* op = new char[MAX_OPCODE_SIZE];
 					strcpy(op, currentMnemonic.Opcode.c_str());
 					int OpCode = HexToInt(op);
-					//get n & i bits
-					if(currentOperand.find("#"))
+					//check if using indexing
+					if(currentOperand.find(","))
 					{
+						xbpe += 10;
+						OpCode += 3;
+						int pos = currentOperand.find_first_of(',');
+						string operand = currentOperand.substr(0, pos-1);
+						symbolIt = SymbolTable.find(operand);
+						if(symbolIt != SymbolTable.end())
+						{
+							Symbol symbol = symbolIt->second;
+							disp = symbol.Address - currentPC;
+						}
+					}
+					if(currentLiteral != "")
+					{
+						xbpe += 2;
+						OpCode += 3;
+						char* currLit = new char[MAX_OPERAND_SIZE];
+					}
+					//get n & i bits
+					else if(currentOperand.find("#"))
+					{
+						string Operand = currentOperand.substr(1);
 						OpCode += 1;
 						//check if symbol
+						map<string, Symbol>::iterator symbolIt = SymbolTable.find(Operand);
+						if(symbolIt != SymbolTable.end())
+						{
+							Symbol symbol = symbolIt->second;
+							
+						}
 
 						//check if number
 					}
@@ -414,6 +443,8 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 					{
 						OpCode += 2;
 						xbpe += 2;
+						string Operand = currentOperand.substr(1);
+						//symbolIt = SymbolTable.
 					}
 					else
 					{
@@ -563,7 +594,7 @@ void RemoveEndApostrophe(char* string)
 	*ptr = '\0';
 }
 
-void RemoveOperandType(char *string)
+void RemoveOperandType(char* string)
 {
 	char *ptr = string;
 	ptr += 2;
