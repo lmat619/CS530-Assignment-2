@@ -714,16 +714,21 @@ string ProcessInstruction(int LOCCTR, char* instruction, char* operand)
 		{
 			string oper(operand);
 			retStr = IntToHex((int)SIC_Opcodes[op].code, 2);
-			if(StrPos(oper.c_str(), ",")){
+			if(StrPos(oper.c_str(), ","))
+			{
 				//take apart the operand into two strings
 				string o2 = string(((char*)(StrPos(oper.c_str(), ","))+1));
 				string o1 = oper.substr(1, oper.length() - o2.length());
 				int k=0;
 				//is this a register?
-				if(GetRegisterNum(o1.c_str()) > -1) k |= (SIC_Regs[GetRegisterNum(o1.c_str())].code << 4);
-				else k |= (atoi(o1.c_str()) << 4);
-				if(GetRegisterNum(o2.c_str()) > -1) k |= SIC_Regs[GetRegisterNum(o2.c_str())].code;
-				else k |= atoi(o2.c_str());
+				if(GetRegisterNum(o1.c_str()) > -1) 
+					k |= (SIC_Regs[GetRegisterNum(o1.c_str())].code << 4);
+				else 
+					k |= (atoi(o1.c_str()) << 4);
+				if(GetRegisterNum(o2.c_str()) > -1) 
+					k |= SIC_Regs[GetRegisterNum(o2.c_str())].code;
+				else 
+					k |= atoi(o2.c_str());
 				retStr += IntToHex(k, 2);
 			}
 			else

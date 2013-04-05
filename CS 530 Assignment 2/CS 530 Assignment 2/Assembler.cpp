@@ -101,7 +101,6 @@ void Pass1(std::string Path)
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
 					PC += (strlen(Operand) / 2);
-					//PC += 1;
 				}
 				else if(Operand[0] == 'C' && Operand[1] == '\'')
 				{
@@ -306,6 +305,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 	}
 	else
 	{
+		int xbpe = 0;
 		//get from dictionary
 		Mnemonic currentMnemonic;
 		//Check if OpCode exists in table
@@ -346,6 +346,38 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 			}
 			else if(currentMnemonic.isFormat0 || currentMnemonic.isFormat3)
 			{
+				//check if using indexing
+				if(currentOperand.find(","))
+					xbpe += 8;
+				if(machineType == Basic)
+				{
+
+				}
+				else
+				{
+					char* op = new char[MAX_OPCODE_SIZE];
+					strcpy(op, currentMnemonic.Opcode.c_str());
+					int OpCode = HexToInt(op);
+					//get n & i bits
+					if(currentOperand.find("#"))
+					{
+						OpCode += 1;
+						//check if symbol
+
+						//check if number
+					}
+					else if(currentOperand.find("@"))
+					{
+						OpCode += 2;
+						xbpe += 2;
+					}
+					else
+					{
+						OpCode += 3;
+						xbpe += 2;
+					}
+
+				}
 			}
 			else if(currentMnemonic.isFormat2)
 			{
