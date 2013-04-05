@@ -19,6 +19,7 @@ string LabelArray[500];
 string OperandArray[500];
 string LitArray[500];
 string ModRecArray[500];
+bool userHex[500];
 int ModRecordCounter = 0;
 int PC = 0;
 int StartingAddress = 0;
@@ -101,6 +102,7 @@ void Pass1(std::string Path)
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
 					PC += (strlen(Operand) / 2);
+					userHex[IndexCount] = true;
 					//PC += 1;
 				}
 				else if(Operand[0] == 'C' && Operand[1] == '\'')
@@ -108,12 +110,26 @@ void Pass1(std::string Path)
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
 					PC += strlen(Operand);
+					userHex[IndexCount] = false;
 				}
 				else
 					PC += 1;
 			}
 			else if (!strcmp(OpCode, "WORD"))
 			{
+				if(Operand[0] == 'X' && Operand[1] == '\'')
+				{
+					RemoveEndApostrophe(Operand);
+					RemoveOperandType(Operand);
+					userHex[IndexCount] = true;
+					//PC += 1;
+				}
+				else if(Operand[0] == 'C' && Operand[1] == '\'')
+				{
+					RemoveEndApostrophe(Operand);
+					RemoveOperandType(Operand);
+					userHex[IndexCount] = false;
+				}
 				PC += 3;
 			}
 			else if (!strcmp(OpCode, "EQU"))
@@ -250,7 +266,7 @@ void Pass2()
 		string currentLabel = LabelArray[currentLineIndex];
 		string currentOperand = OperandArray[currentLineIndex];
 		string currentLiteral = LitArray[currentLineIndex];
-
+		bool currentUserHex = userHex[currentLineIndex];
 		if(currentOpCode == "START")
 		{
 			output += "H";
@@ -267,10 +283,12 @@ void Pass2()
 		if(currentOpCode == "END")
 		{
 			//do stuff
+			//E^startingaddressinhex
 			break;
 		}
-		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral);
-		if((textRecord.length() + objectCode.length()) > 60)
+		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral, currentUserHex);
+
+		if((textRecord.length() + objectCode.length()) > 60 || currentOpCode == "RESW" || currentOpCode == "RESB")
 		{
 			//end this text record
 			output += "T";
@@ -292,17 +310,42 @@ void Pass2()
 	}
 }
 
-string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral)
+string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, bool currentUserHex)
 {
 	string objCode("");
 	if(currentOpCode == "WORD")
 	{
+		if (currentUserHex)
+		{
+			currentOperand += "000000";
+			objCode = currentOperand.substr(0, 6);
+		}
+		else
+		{
+			string val("");
+			for(int i = 0; i < currentOperand.length(); i++)
+				val += IntToHex((int)currentOperand[i]);
+			val += "000000";
+			objCode = val.substr(0, 6);
+		}
 	}
 	else if(currentOpCode == "BYTE")
 	{
-	}
+		if (currentUserHex)
+		{
+			objCode = currentOperand;
+		}
+		else
+		{
+			string val("");
+			for(int i = 0; i < currentOperand.length(); i++)
+				val += IntToHex((int)currentOperand[i]);
+			objCode = val;
+		}
+	}	
 	else if(currentOpCode == "RESW" || currentOpCode == "RESB")
-	{
+	{ 
+		return objCode;
 	}
 	else
 	{

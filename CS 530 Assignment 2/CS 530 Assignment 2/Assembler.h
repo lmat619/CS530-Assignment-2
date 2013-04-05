@@ -21,7 +21,7 @@ enum MachineType
 
 void Pass1(std::string Path);
 void Pass2();
-string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral);
+string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, bool currentUserHex);
 std::vector<std::string> SplitCommas(string operand);
 int GetRegisterNum(string reg);
 void GetLabel(char* dest, char* line);
