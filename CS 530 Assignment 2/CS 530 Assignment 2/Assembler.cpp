@@ -86,10 +86,18 @@ void Pass1(std::string Path)
 
 			if(!strcmp(OpCode, "START"))
 			{
+				PCArray[IndexCount] = PC;
+				OpCodeArray[IndexCount] = OpCode;
+				LabelArray[IndexCount] = Label;
+				OperandArray[IndexCount] = Operand;
 				continue;
 			}
 			else if (!strcmp(OpCode, "END"))
 			{
+				PCArray[IndexCount] = PC;
+				OpCodeArray[IndexCount] = OpCode;
+				LabelArray[IndexCount] = Label;
+				OperandArray[IndexCount] = Operand;
 				break;
 			}
 			else if (!strcmp(OpCode, "RESB"))
@@ -281,42 +289,67 @@ void Pass2()
 		if(currentOpCode == "START")
 		{
 			output += "H";
-			if (currentLabel.length() < 6)
-				currentLabel = PadWithZeros(currentLabel, currentLabel.length(), 6);
-			if(currentOperand.length() < 6)
-				currentOperand = PadWithZeros(currentOperand, currentOperand.length(), 6);
+			while (currentLabel.length() < 6)
+				currentLabel = "0" + currentLabel;
+			while(currentOperand.length() < 6)
+				currentOperand = "0" + currentOperand;
 			string progLength = IntToHex(ProgramLength);
-			if(progLength.length() < 6)
-				progLength = PadWithZeros(progLength, progLength.length(), 6) + "\n";
-			output  += currentLabel + currentOperand + progLength;
+			while(progLength.length() < 6)
+				progLength = "0" + progLength;
+
+			output  += currentLabel + currentOperand + progLength + "\n";
 			continue;
 		}
 		if(currentOpCode == "END")
 		{
+			if (textRecord != "")
+			{
+				//end this text record
+				output += "T";
+				string startAdd = IntToHex((int)textRecordStartAddress);
+				string recordLength = IntToHex((int)(textRecord.length()/2));
+				if(startAdd.length() < 6)
+					startAdd = PadWithZeros(startAdd, startAdd.length(), 6);
+				if(recordLength.length() < 2)
+					recordLength = PadWithZeros(recordLength, recordLength.length(), 2);
+				output += startAdd + recordLength + textRecord + "\n";
+				textRecord = "";
+			}
 			//do stuff
 			//E^startingaddressinhex
 			string starting = IntToHex(StartingAddress);
-			if (starting.length() < 6)
-				PadWithZeros(starting, starting.length(), 6);
+			while (starting.length() < 6)
+			{
+				starting = "0" + starting;
+			}
 			output += "E";
 			output += starting;
 			output += "\n";
+
+			//write mods
+			for (int i = 0; i < ModRecordCounter; i++)
+			{
+				output += ModRecArray[i] + "\n";
+			}
 			break;
 		}
 		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral, currentUserHex);
 
 		if((textRecord.length() + objectCode.length()) > 60 || currentOpCode == "RESW" || currentOpCode == "RESB")
 		{
-			//end this text record
-			output += "T";
-			string startAdd = IntToHex((int)textRecordStartAddress);
-			string recordLength = IntToHex((int)(textRecord.length()/2));
-			if(startAdd.length() < 6)
-				startAdd = PadWithZeros(startAdd, startAdd.length(), 6);
-			if(recordLength.length() < 2)
-				recordLength = PadWithZeros(recordLength, recordLength.length(), 2);
-			output += startAdd + recordLength + textRecord + "\n";
-			//start new text record
+			if (textRecord != "")
+			{
+				//end this text record
+				output += "T";
+				string startAdd = IntToHex((int)textRecordStartAddress);
+				string recordLength = IntToHex((int)(textRecord.length()/2));
+				if(startAdd.length() < 6)
+					startAdd = PadWithZeros(startAdd, startAdd.length(), 6);
+				if(recordLength.length() < 2)
+					recordLength = PadWithZeros(recordLength, recordLength.length(), 2);
+				output += startAdd + recordLength + textRecord + "\n";
+			}
+			//start new text record			
 			textRecord = objectCode;
 			//textRecordStartAddress = currentPC;
 			textRecordStartAddress = PCArray[currentLineIndex + 1];
@@ -326,6 +359,7 @@ void Pass2()
 			textRecord += objectCode;
 		}
 	}
+	cout << output;
 }
 
 string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, bool currentUserHex)
