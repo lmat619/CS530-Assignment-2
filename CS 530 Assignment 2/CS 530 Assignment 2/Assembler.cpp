@@ -268,7 +268,7 @@ void Pass2()
 {
 	string output("");
 	string textRecord("");
-	int textRecordStartAddress;
+	int textRecordStartAddress = StartingAddress;
 	int currentLineIndex;
 	for (currentLineIndex = 0; currentLineIndex <= IndexCount; currentLineIndex++)
 	{
@@ -318,7 +318,8 @@ void Pass2()
 			output += startAdd + recordLength + textRecord + "\n";
 			//start new text record
 			textRecord = objectCode;
-			textRecordStartAddress = currentPC;
+			//textRecordStartAddress = currentPC;
+			textRecordStartAddress = PCArray[currentLineIndex + 1];
 		}
 		else
 		{
@@ -478,6 +479,15 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 					if(it != SymbolTable.end())
 					{
 						string address = IntToHex(it->second.Address);
+						while (address.length() < 5)
+						{
+							address = "0" + address;
+						}
+						objCode += address;
+					}
+					else
+					{						
+						string address = IntToHex(atoi(currentOperand.c_str()));
 						while (address.length() < 5)
 						{
 							address = "0" + address;
