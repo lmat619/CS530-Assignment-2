@@ -27,6 +27,9 @@
     <ClCompile Include="SymbolTableDictionary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LiteralTableDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InstructionTableDictionary.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SymbolTableDictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LiteralTableDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
