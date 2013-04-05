@@ -5,6 +5,7 @@
 #include <map>
 #include <algorithm>
 #include <vector>
+#include <fstream>
 #include "InstructionTableDictionary.h"
 #include "SymbolTableDictionary.h"
 #include "LiteralTableDictionary.h"
@@ -359,7 +360,8 @@ void Pass2()
 			textRecord += objectCode;
 		}
 	}
-	cout << output;
+	//cout << output;
+	PrintToFile(output);
 }
 
 string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, bool currentUserHex)
@@ -720,6 +722,37 @@ std::vector<std::string> SplitCommas(string operand)
 	registers[0] = register1;
 	registers[1] = register2;
 	return registers;
+}
+
+void PrintToFile(string output)
+{
+	//Export objectFile
+	ofstream outFile;
+	outFile.open(".\\output");
+	outFile << output;
+	outFile.close();
+
+	////Export Symbol Table
+	outFile.open(".\\symbolTable");
+	map<string, Symbol>::iterator symbolIt;
+	outFile << "Name\tAddress\n\n";
+	for(symbolIt = SymbolTable.begin(); symbolIt != SymbolTable.end(); symbolIt++)
+	{
+		Symbol symbol = symbolIt->second;
+		outFile << symbol.Name << "\t" << IntToHex(symbol.Address) << "\n";
+	}
+	outFile.close();
+
+	////Export Literal Table
+	outFile.open(".\\literalTable");
+	map<string, Literal>::iterator literalIt;
+	outFile << "Name\tValue\tLength\tAddress\n\n";
+	for(literalIt = LiteralTable.begin(); literalIt != LiteralTable.end(); literalIt++)
+	{
+		Literal lit = literalIt->second;
+		outFile << lit.Name << "\t" << lit.Value << "\t" << lit.Length << "\t" << IntToHex(lit.Address) << "\n";
+	}
+	outFile.close();
 }
 
 int GetRegisterNum(string reg)
