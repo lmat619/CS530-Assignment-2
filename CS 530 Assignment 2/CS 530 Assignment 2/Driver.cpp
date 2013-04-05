@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <string>
 #include <algorithm>
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
 		cout << "Please type in the file path of a SIC Basic or XE source code" << endl;
 		getline(cin, filePath);
 	}*/
+
 	filePath = ".\\assembleTest.txt";
 	LoadDictionary();
 	try
@@ -35,6 +37,7 @@ int main(int argc, char* argv[])
 	}
 
 	system("PAUSE");
+	exit(0);
 }
 
 string IntToHex(int num)
