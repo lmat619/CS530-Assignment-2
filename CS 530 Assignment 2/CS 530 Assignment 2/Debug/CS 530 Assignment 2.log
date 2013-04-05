@@ -1,73 +1,20 @@
-﻿Build started 4/4/2013 7:40:19 PM.
-     1>Project "C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" on node 2 (rebuild target(s)).
-     1>_PrepareForClean:
-         Deleting file "Debug\CS 530 Assignment 2.lastbuildstate".
-       InitializeBuildStatus:
+﻿Build started 4/4/2013 9:21:08 PM.
+     1>Project "C:\Program Files (x86)\SmartGitHg 4\bin\CS530-Assignment-2_\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
          Creating "Debug\CS 530 Assignment 2.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Assembler.cpp Driver.cpp InstructionTableDictionary.cpp LiteralTableDictionary.cpp SymbolTableDictionary.cpp
-         SymbolTableDictionary.cpp
-         LiteralTableDictionary.cpp
-         InstructionTableDictionary.cpp
-         Driver.cpp
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\driver.cpp(9): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\driver.cpp(43): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-         Assembler.cpp
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(11): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(33): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(193): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(209): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(227): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(326): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(341): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(403): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(536): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(570): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-         Generating Code...
-     1>c:\users\louie\documents\cs 530 assignment 2\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(295): warning C4700: uninitialized local variable 'textRecordStartAddress' used
+         All outputs are up-to-date.
        ManifestResourceCompile:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\CS 530 Assignment 2.exe.embed.manifest.res" "Debug\CS 530 Assignment 2_manifest.rc" 
+         All outputs are up-to-date.
        Link:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\CS 530 Assignment 2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.lib" /MACHINE:X86 "Debug\CS 530 Assignment 2.exe.embed.manifest.res"
-         Debug\Assembler.obj
-         Debug\Driver.obj
-         Debug\InstructionTableDictionary.obj
-         Debug\LiteralTableDictionary.obj
-         Debug\SymbolTableDictionary.obj /FORCE 
-     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
-     1>Driver.obj : warning LNK4006: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl IntToHex(int)" (?IntToHex@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in Assembler.obj; second definition ignored
-     1>Driver.obj : warning LNK4006: "class std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct Mnemonic,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,struct Mnemonic> > > InstructionTable" (?InstructionTable@@3V?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@@std@@@2@@std@@A) already defined in Assembler.obj; second definition ignored
-     1>InstructionTableDictionary.obj : warning LNK4006: "class std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct Mnemonic,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,struct Mnemonic> > > InstructionTable" (?InstructionTable@@3V?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@@std@@@2@@std@@A) already defined in Assembler.obj; second definition ignored
-     1>C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
+         All outputs are up-to-date.
        Manifest:
-         Deleting file "Debug\CS 530 Assignment 2.exe.embed.manifest".
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\CS 530 Assignment 2.exe.embed.manifest" /manifest "Debug\CS 530 Assignment 2.exe.intermediate.manifest"
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\CS 530 Assignment 2.exe.embed.manifest.res" "Debug\CS 530 Assignment 2_manifest.rc" 
-       LinkEmbedManifest:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\CS 530 Assignment 2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.lib" /MACHINE:X86 "Debug\CS 530 Assignment 2.exe.embed.manifest.res"
-         Debug\Assembler.obj
-         Debug\Driver.obj
-         Debug\InstructionTableDictionary.obj
-         Debug\LiteralTableDictionary.obj
-         Debug\SymbolTableDictionary.obj /FORCE 
-     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/FORCE' specification
-     1>Driver.obj : warning LNK4006: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl IntToHex(int)" (?IntToHex@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in Assembler.obj; second definition ignored
-     1>Driver.obj : warning LNK4006: "class std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct Mnemonic,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,struct Mnemonic> > > InstructionTable" (?InstructionTable@@3V?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@@std@@@2@@std@@A) already defined in Assembler.obj; second definition ignored
-     1>InstructionTableDictionary.obj : warning LNK4006: "class std::map<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,struct Mnemonic,struct std::less<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > >,class std::allocator<struct std::pair<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const ,struct Mnemonic> > > InstructionTable" (?InstructionTable@@3V?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@U?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UMnemonic@@@std@@@2@@std@@A) already defined in Assembler.obj; second definition ignored
-     1>C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
-         CS 530 Assignment 2.vcxproj -> C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\Debug\CS 530 Assignment 2.exe
+         All outputs are up-to-date.
        FinalizeBuildStatus:
          Deleting file "Debug\CS 530 Assignment 2.unsuccessfulbuild".
          Touching "Debug\CS 530 Assignment 2.lastbuildstate".
-     1>Done Building Project "C:\Users\Louie\Documents\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Program Files (x86)\SmartGitHg 4\bin\CS530-Assignment-2_\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.40
+Time Elapsed 00:00:00.05

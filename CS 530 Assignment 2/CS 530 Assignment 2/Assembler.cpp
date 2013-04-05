@@ -189,6 +189,7 @@ void Pass1(std::string Path)
 					//Check if Operand is literal
 					if(Operand[0] == '=')
 					{
+						LitArray[IndexCount] = Operand;
 						char* OperandCopy = new char[MAX_OPERAND_SIZE];
 						strcpy(OperandCopy, Operand);
 						//Get rid of '='
@@ -220,6 +221,8 @@ void Pass1(std::string Path)
 							}
 						}
 					}
+					else
+					{ LitArray[IndexCount] = ""; }
 				}
 				else
 				{
@@ -284,6 +287,12 @@ void Pass2()
 		{
 			//do stuff
 			//E^startingaddressinhex
+			string starting = IntToHex(StartingAddress);
+			if (starting.length() < 6)
+				PadWithZeros(starting, starting.length(), 6);
+			output += "E";
+			output += starting;
+			output += "\n";
 			break;
 		}
 		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral, currentUserHex);
@@ -382,6 +391,110 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 				else
 				{
 					ModRecArray[ModRecordCounter++] = "M^" + IntToHex(currentPC) + "^05";
+				}
+				
+				char* op1 = new char[MAX_OPCODE_SIZE];
+				strcpy(op1, currentMnemonic.Opcode.c_str());
+				int OpCode = HexToInt(op1);
+
+				if (currentLiteral != "")
+				{
+					//nixbpe
+					//110001
+					OpCode += 3;
+					objCode += IntToHex(OpCode);
+					objCode += "1";
+					map<std::string, Literal>::iterator it = LiteralTable.find(currentLiteral);
+					//If it does not exist, add literal to table
+					if(it != LiteralTable.end())
+					{
+						string address = IntToHex(it->second.Address);
+						while (address.length() < 5)
+						{
+							address = "0" + address;
+						}
+						objCode += address;
+					}
+				}
+				else if(currentOperand.find(","))
+				{
+					//nixbpe
+					//111001					
+					OpCode += 3;
+					objCode += IntToHex(OpCode);
+					objCode += "9";
+					currentOperand = currentOperand.substr(0, currentOperand.find_first_of(",") - 1);
+					map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
+					//If it does not exist, add literal to table
+					if(it != SymbolTable.end())
+					{
+						string address = IntToHex(it->second.Address);
+						while (address.length() < 5)
+						{
+							address = "0" + address;
+						}
+						objCode += address;
+					}
+				}				
+				//get n & i bits
+				else if(currentOperand.find("@"))
+				{				
+					//nixbpe
+					//100001
+					OpCode += 2;
+					objCode += IntToHex(OpCode);
+					objCode += "1";
+					currentOperand = currentOperand.substr(1);
+					map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
+					//If it does not exist, add literal to table
+					if(it != SymbolTable.end())
+					{
+						string address = IntToHex(it->second.Address);
+						while (address.length() < 5)
+						{
+							address = "0" + address;
+						}
+						objCode += address;
+					}
+				}
+				else if(currentOperand.find("#"))
+				{
+					//nixbpe	
+					//010001
+					OpCode += 1;
+					objCode += IntToHex(OpCode);
+					objCode += "1";
+					currentOperand = currentOperand.substr(1);
+					map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
+					//If it does not exist, add literal to table
+					if(it != SymbolTable.end())
+					{
+						string address = IntToHex(it->second.Address);
+						while (address.length() < 5)
+						{
+							address = "0" + address;
+						}
+						objCode += address;
+					}
+				}
+				else
+				{
+					//nixbpe
+					//110001
+					OpCode += 3;
+					objCode += IntToHex(OpCode);
+					objCode += "1";					
+					map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
+					//If it does not exist, add literal to table
+					if(it != SymbolTable.end())
+					{
+						string address = IntToHex(it->second.Address);
+						while (address.length() < 5)
+						{
+							address = "0" + address;
+						}
+						objCode += address;
+					}
 				}
 			}
 			else if(currentMnemonic.isFormat1)
