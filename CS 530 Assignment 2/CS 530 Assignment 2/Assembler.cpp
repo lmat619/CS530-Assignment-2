@@ -48,9 +48,17 @@ void Pass1(std::string Path)
 		//Check if line is a comment
 		if(line [0] != '.')
 		{
+			
+			string lineS(line);
+			if (lineS.find(".") != string::npos)
+			{
+				lineS = lineS.substr(0, lineS.find_first_of(".") - 1);
+			}
+			strcmp(line, lineS.c_str());
+
 			GetLabel(Label, line);
 			GetOpCode(OpCode, line);
-			GetOperand(Operand, line);
+			GetOperand(Operand, line);			
 
 			//Check if OpCode is directive
 			if(!strcmp(OpCode, "START"))
