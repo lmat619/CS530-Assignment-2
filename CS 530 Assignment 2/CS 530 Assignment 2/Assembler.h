@@ -13,6 +13,13 @@ enum MachineType
 	XE = 1
 };
 
+enum WordByteType
+{
+	Hex = 0,
+	Char = 1,
+	Base10 = 3
+};
+
 #define READ "r"
 #define MAX_RECORD_SIZE 68
 #define MAX_LABEL_SIZE 8
@@ -21,7 +28,7 @@ enum MachineType
 
 void Pass1(std::string Path);
 void Pass2();
-string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, bool currentUserHex);
+string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, WordByteType currentUserHex);
 std::vector<std::string> SplitCommas(string operand);
 void PrintToFile(string output);
 int GetRegisterNum(string reg);

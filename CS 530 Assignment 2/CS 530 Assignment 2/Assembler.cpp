@@ -13,14 +13,14 @@
 
 using namespace std;
 
-MachineType machineType = XE;
+MachineType machineType = Basic;
 int PCArray[500];
 string OpCodeArray[500];
 string LabelArray[500];
 string OperandArray[500];
 string LitArray[500];
 string ModRecArray[500];
-bool userHex[500];
+WordByteType userHex[500];
 int ModRecordCounter = 0;
 int PC = 0;
 int StartingAddress = 0;
@@ -49,17 +49,28 @@ void Pass1(std::string Path)
 		//Check if line is a comment
 		if(line [0] != '.')
 		{
-
+			TrimEnd(line);
 			string lineS(line);
-			if (lineS.find(".") != string::npos)
+			if (lineS == "")
 			{
+				continue;
+			}
+			if (lineS.find(".") != string::npos)
+			{				
 				lineS = lineS.substr(0, lineS.find_first_of(".") - 1);
 			}
 			strcpy(line, lineS.c_str());
-
+			Label[0] = 0;
+			OpCode[0] = 0;
+			Operand[0] = 0;
 			GetLabel(Label, line);
 			GetOpCode(OpCode, line);
 			GetOperand(Operand, line);			
+
+			if (!strcmp(OpCode, ""))
+			{
+				continue;
+			}
 
 			//Check if OpCode is directive
 			if(!strcmp(OpCode, "START"))
@@ -103,13 +114,13 @@ void Pass1(std::string Path)
 			}
 			else if (!strcmp(OpCode, "RESB"))
 			{
-				int value = HexToInt(Operand);
+				int value = atoi(Operand);
 				PC += value;
 			}
 			else if (!strcmp(OpCode, "RESW"))
 			{
 				TrimEnd(Operand);
-				int value = HexToInt(Operand);
+				int value = atoi(Operand);
 				PC += (value*3);
 			}
 			else if (!strcmp(OpCode,  "BYTE"))
@@ -119,7 +130,7 @@ void Pass1(std::string Path)
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
 					PC += (strlen(Operand) / 2);
-					userHex[IndexCount] = true;
+					userHex[IndexCount] = Hex;
 					//PC += 1;
 				}
 				else if(Operand[0] == 'C' && Operand[1] == '\'')
@@ -127,10 +138,13 @@ void Pass1(std::string Path)
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
 					PC += strlen(Operand);
-					userHex[IndexCount] = false;
+					userHex[IndexCount] = Char;
 				}
 				else
+				{
+					userHex[IndexCount] = Base10;
 					PC += 1;
+				}
 			}
 			else if (!strcmp(OpCode, "WORD"))
 			{
@@ -138,15 +152,17 @@ void Pass1(std::string Path)
 				{
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
-					userHex[IndexCount] = true;
+					userHex[IndexCount] = Hex;
 					//PC += 1;
 				}
 				else if(Operand[0] == 'C' && Operand[1] == '\'')
 				{
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
-					userHex[IndexCount] = false;
+					userHex[IndexCount] = Char;
 				}
+				else
+					userHex[IndexCount] = Base10;
 				PC += 3;
 			}
 			else if (!strcmp(OpCode, "EQU"))
@@ -290,7 +306,7 @@ void Pass2()
 		string currentLabel = LabelArray[currentLineIndex];
 		string currentOperand = OperandArray[currentLineIndex];
 		string currentLiteral = LitArray[currentLineIndex];
-		bool currentUserHex = userHex[currentLineIndex];
+		WordByteType currentUserHex = userHex[currentLineIndex];
 		if(currentOpCode == "START")
 		{
 			output += "H";
@@ -357,7 +373,7 @@ void Pass2()
 			//start new text record			
 			textRecord = objectCode;
 			//textRecordStartAddress = currentPC;
-			textRecordStartAddress = PCArray[currentLineIndex + 1];
+			textRecordStartAddress = PCArray[currentLineIndex - 1];
 		}
 		else
 		{
@@ -368,36 +384,52 @@ void Pass2()
 	PrintToFile(output);
 }
 
-string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, bool currentUserHex)
+string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, WordByteType currentUserHex)
 {
 	string objCode("");
 	if(currentOpCode == "WORD")
 	{
-		if (currentUserHex)
+		if (currentUserHex == Hex)
 		{
-			currentOperand += "000000";
-			objCode = currentOperand.substr(0, 6);
+			while (currentOperand.length() < 6)
+				currentOperand = "0" + currentOperand;
+			objCode = currentOperand;
 		}
-		else
+		else if (currentUserHex == Char)
 		{
 			string val("");
 			for(int i = 0; i < currentOperand.length(); i++)
 				val += IntToHex((int)currentOperand[i]);
-			val += "000000";
-			objCode = val.substr(0, 6);
+			while (val.length() < 6)
+				val = "0" + val;
+			objCode = val;
+		}
+		else
+		{
+			string val("");
+			val = IntToHex(atoi(currentOperand.c_str()));
+			while (val.length() < 6)
+				val = "0" + val;
+			objCode = val;
 		}
 	}
 	else if(currentOpCode == "BYTE")
 	{
-		if (currentUserHex)
+		if (currentUserHex == Hex)
 		{
 			objCode = currentOperand;
 		}
-		else
+		else if (currentUserHex == Char)
 		{
 			string val("");
 			for(int i = 0; i < currentOperand.length(); i++)
 				val += IntToHex((int)currentOperand[i]);
+			objCode = val;
+		}
+		else
+		{
+			string val("");
+			val = IntToHex(atoi(currentOperand.c_str()));	
 			objCode = val;
 		}
 	}	
@@ -561,7 +593,11 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 			}
 			else if(currentMnemonic.isFormat0 || currentMnemonic.isFormat3)
 			{
-				if(machineType == Basic)
+				if (currentMnemonic.mnemonic == "RSUB")
+				{
+					objCode = "4C0000";
+				}
+				else if(machineType == Basic)
 				{
 					//ni
 					//00
@@ -815,28 +851,52 @@ void GetLabel(char* dest, char* line)
 {
 	int i;
 	for(i = 0; i < 8; i++)
-		dest[i] = line[i];
+	{
+		if (line[i] != '\0')
+			dest[i] = line[i];
+	}
 	dest[i] = '\0';
 	TrimEnd(dest);
 }
 
 void GetOpCode(char* dest, char* line)
 {
-	int i;
-	for(i = 0; i < 8; i++)
-		dest[i] = line[i+9];
+	int i = 0;
+	int checkForBadLine = 0;
+	for (int j = 0 ; j < 9; j++)
+	{
+		if (line[j] == '\0')
+			checkForBadLine = 1;
+	}
+	if (checkForBadLine == 0)
+	{
+		for(i = 0; i < 8; i++)
+		{
+			if (line[i+9] != '\0')
+				dest[i] = line[i+9];
+		}
+	}
 	dest[i] = '\0';
 	TrimEnd(dest);
 }
 
 void GetOperand(char* dest, char* line)
 {
-	int i;
-	for(i = 0; i < 50; i++)
+	int i = 0;
+	int checkForBadLine = 0;
+	for (int j = 0 ; j < 18; j++)
 	{
-		dest[i] = line[i+18];
-		if(dest[i] == '\0')
-			break;
+		if (line[j] == '\0')
+			checkForBadLine = 1;
+	}
+	if (checkForBadLine == 0)
+	{
+		for(i = 0; i < 50; i++)
+		{
+			dest[i] = line[i+18];
+			if(dest[i] == '\0')
+				break;
+		}
 	}
 	dest[i] = '\0';
 	TrimEnd(dest);
