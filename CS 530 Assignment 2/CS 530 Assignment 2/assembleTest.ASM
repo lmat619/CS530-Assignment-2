@@ -40,8 +40,8 @@ EXIT     STCH     BUFFER,X          .STORE EOL/EOF IN BUFFER
          ADD      ONE               .  EOL OR EOF
          STA      LENGTH
          RSUB                      .RETURN TO CALLER
-INPUT    BYTE     X'F3'             .CODE FOR INPUT DEVICEMAXLEN
-         WORD     4096
+INPUT    BYTE     X'F3'             .CODE FOR INPUT DEVICE
+MAXLEN   WORD     4096
 . 
 .       SUBROUTINE TO WRITE RECORD FROM BUFFER 
 . 

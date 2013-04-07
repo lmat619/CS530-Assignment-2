@@ -57,7 +57,7 @@ void Pass1(std::string Path)
 			}
 			if (lineS.find(".") != string::npos)
 			{				
-				lineS = lineS.substr(0, lineS.find_first_of(".") - 1);
+				lineS = lineS.substr(0, lineS.find_first_of("."));
 			}
 			strcpy(line, lineS.c_str());
 			Label[0] = 0;
@@ -506,7 +506,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 					OpCode += 3;
 					objCode += IntToHex(OpCode);
 					objCode += "9";
-					currentOperand = currentOperand.substr(0, currentOperand.find_first_of(",") - 1);
+					currentOperand = currentOperand.substr(0, currentOperand.find_first_of(","));
 					map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
 					//If it does not exist, add literal to table
 					if(it != SymbolTable.end())
@@ -607,7 +607,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 					int add;
 					if(currentOperand.find(",") != string::npos)
 					{
-						currentOperand = currentOperand.substr(0, currentOperand.find_first_of(",") - 1);
+						currentOperand = currentOperand.substr(0, currentOperand.find_first_of(","));
 						isIndexed = 1;
 					}
 					map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
@@ -665,7 +665,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						OpCode += 3;
 						objCode += IntToHex(OpCode);
 						objCode += "10";
-						currentOperand = currentOperand.substr(0, currentOperand.find_first_of(",") - 1);
+						currentOperand = currentOperand.substr(0, currentOperand.find_first_of(","));
 						map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
 						//If it does not exist, add literal to table
 						if(it != SymbolTable.end())
