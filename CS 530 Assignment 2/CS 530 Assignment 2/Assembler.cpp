@@ -26,6 +26,7 @@ int PC = 0;
 int StartingAddress = 0;
 int IndexCount = -1;
 int ProgramLength;
+int reserveByteCount = 0;
 char* error = new char[100];
 
 void Pass1(std::string Path)
@@ -373,9 +374,8 @@ void Pass2()
 				output += startAdd + recordLength + textRecord + "\n";
 			}
 			//start new text record			
-			textRecord = objectCode;
-			//textRecordStartAddress = currentPC;
-			textRecordStartAddress = PCArray[currentLineIndex - 1];
+			textRecord = objectCode;				
+			textRecordStartAddress = PCArray[currentLineIndex - 1] + reserveByteCount;
 		}
 		else
 		{
@@ -388,6 +388,7 @@ void Pass2()
 
 string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, WordByteType currentUserHex)
 {
+	reserveByteCount = 0;
 	string objCode("");
 	if(currentOpCode == "WORD")
 	{
@@ -437,6 +438,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 	}	
 	else if(currentOpCode == "RESW" || currentOpCode == "RESB")
 	{ 
+		reserveByteCount = atoi(currentOperand.c_str());
 		return objCode;
 	}
 	else

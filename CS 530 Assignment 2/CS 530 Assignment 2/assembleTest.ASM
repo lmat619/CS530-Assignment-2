@@ -52,6 +52,6 @@ WLOOP    TD       OUTPUT            .TEST OUTPUT DEVICE
          WD       OUTPUT            .WRITE CHARACTER
          TIX      LENGTH            .LOOP UNTIL ALL CHARACTERS
          JLT      WLOOP             .   HAVE BEEN WRITTEN
-         RSUB                      .RETURN TO CALLER OUTPUT
-         BYTE     X'06'             .CODE FOR OUTPUT DEVICE
+         RSUB                      .RETURN TO CALLER 
+OUTPUT   BYTE     X'06'             .CODE FOR OUTPUT DEVICE
          END      FIRST
