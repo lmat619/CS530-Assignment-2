@@ -39,8 +39,8 @@ EXIT     STCH     BUFFER,X          STORE EOL/EOF IN BUFFER
          LDA      LENGTH            MODIFY RECORD LENGTH TO INCLUDE
          ADD      ONE               EOL OR EOF
          STA      LENGTH
-         RSUB                       RETURN TO CALLER
-INPUT    BYTE     X'F3'             CODE FOR INPUT DEVICE
+         RSUB                      .RETURN TO CALLER
+INPUT    BYTE     X'F3'             .CODE FOR INPUT DEVICE
 MAXLEN   WORD     4096
 . 
 .       SUBROUTINE TO WRITE RECORD FROM BUFFER 
