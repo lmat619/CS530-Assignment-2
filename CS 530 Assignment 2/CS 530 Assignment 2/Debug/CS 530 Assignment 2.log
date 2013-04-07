@@ -1,30 +1,9 @@
-﻿Build started 4/7/2013 1:16:24 PM.
+﻿Build started 4/7/2013 1:19:23 PM.
      1>Project "C:\Program Files (x86)\SmartGitHg 4\bin\CS530-Assignment-2_\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\CS 530 Assignment 2.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Assembler.cpp
-         Assembler.cpp
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(12): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(34): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(234) : see declaration of 'fopen'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(62): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(231): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(247): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(267): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(401): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(425): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(478): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(637): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(913): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\stdio.h(371) : see declaration of 'sprintf'
-     1>c:\program files (x86)\smartgithg 4\bin\cs530-assignment-2_\cs 530 assignment 2\cs 530 assignment 2\assembler.cpp(947): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
+         All outputs are up-to-date.
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -52,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.03
+Time Elapsed 00:00:00.29

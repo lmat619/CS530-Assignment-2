@@ -102,6 +102,7 @@ void Pass1(std::string Path)
 				OpCodeArray[IndexCount] = OpCode;
 				LabelArray[IndexCount] = Label;
 				OperandArray[IndexCount] = Operand;
+				LitArray[IndexCount] = "";
 				continue;
 			}
 			else if (!strcmp(OpCode, "END"))
@@ -110,6 +111,7 @@ void Pass1(std::string Path)
 				OpCodeArray[IndexCount] = OpCode;
 				LabelArray[IndexCount] = Label;
 				OperandArray[IndexCount] = Operand;
+				LitArray[IndexCount] = "";
 				break;
 			}
 			else if (!strcmp(OpCode, "RESB"))
