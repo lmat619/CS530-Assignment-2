@@ -49,8 +49,10 @@ void Pass1(std::string Path)
 		//Check if line is a comment
 		if(line [0] != '.')
 		{
-
+			TrimEnd(line);
 			string lineS(line);
+			if(lineS == "")
+				continue;
 			if (lineS.find(".") != string::npos)
 			{
 				lineS = lineS.substr(0, lineS.find_first_of(".") - 1);
@@ -105,13 +107,13 @@ void Pass1(std::string Path)
 			}
 			else if (!strcmp(OpCode, "RESB"))
 			{
-				int value = HexToInt(Operand);
+				int value = atoi(Operand);
 				PC += value;
 			}
 			else if (!strcmp(OpCode, "RESW"))
 			{
 				TrimEnd(Operand);
-				int value = HexToInt(Operand);
+				int value = atoi(Operand);
 				PC += (value*3);
 			}
 			else if (!strcmp(OpCode,  "BYTE"))
