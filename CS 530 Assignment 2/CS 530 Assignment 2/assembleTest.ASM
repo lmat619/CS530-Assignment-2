@@ -45,13 +45,13 @@ MAXLEN   WORD     4096
 . 
 .       SUBROUTINE TO WRITE RECORD FROM BUFFER 
 . 
-WRREC    LDX      ZERO              CLEAR LOOP COUNTER
-WLOOP    TD       OUTPUT            TEST OUTPUT DEVICE
-         JEQ      WLOOP             LOOP UNTIL READY
-         LDCH     BUFFER,X          GET CHARACTER FROM BUFFER
-         WD       OUTPUT            WRITE CHARACTER
-         TIX      LENGTH            LOOP UNTIL ALL CHARACTERS
-         JLT      WLOOP             HAVE BEEN WRITTEN
-         RSUB                       RETURN TO CALLER OUTPUT
-         BYTE     X'06'             CODE FOR OUTPUT DEVICE
+WRREC    LDX      ZERO              .CLEAR LOOP COUNTER
+WLOOP    TD       OUTPUT            .TEST OUTPUT DEVICE
+         JEQ      WLOOP             .LOOP UNTIL READY
+         LDCH     BUFFER,X          .GET CHARACTER FROM BUFFER
+         WD       OUTPUT            .WRITE CHARACTER
+         TIX      LENGTH            .LOOP UNTIL ALL CHARACTERS
+         JLT      WLOOP             .   HAVE BEEN WRITTEN
+         RSUB                      .RETURN TO CALLER 
+OUTPUT   BYTE     X'06'             .CODE FOR OUTPUT DEVICE
          END      FIRST
