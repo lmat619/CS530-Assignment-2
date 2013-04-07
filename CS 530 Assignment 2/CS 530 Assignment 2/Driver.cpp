@@ -24,20 +24,13 @@ int main(int argc, char* argv[])
 		getline(cin, filePath);
 	}*/
 
-	filePath = ".\\assembleTest.txt";
+	filePath = ".\\assembleTest.asm";
 	LoadDictionary();
-	try
-	{
-		Pass1(filePath);
-		Pass2();
-	}
-	catch (char *error)
-	{
-		printf("Error: %s", error);
-	}
+
+	Pass1(filePath);
+	Pass2();
 
 	system("PAUSE");
-	exit(0);
 }
 
 string IntToHex(int num)

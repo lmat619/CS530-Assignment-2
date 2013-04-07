@@ -55,7 +55,7 @@ void Pass1(std::string Path)
 			{
 				lineS = lineS.substr(0, lineS.find_first_of(".") - 1);
 			}
-			strcmp(line, lineS.c_str());
+			strcpy(line, lineS.c_str());
 
 			GetLabel(Label, line);
 			GetOpCode(OpCode, line);
@@ -295,7 +295,7 @@ void Pass2()
 		{
 			output += "H";
 			while (currentLabel.length() < 6)
-				currentLabel = " " + currentLabel;
+				currentLabel += " ";
 			while(currentOperand.length() < 6)
 				currentOperand = "0" + currentOperand;
 			string progLength = IntToHex(ProgramLength);
