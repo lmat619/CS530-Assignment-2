@@ -382,7 +382,6 @@ void Pass2()
 			textRecord += objectCode;
 		}
 	}
-	//cout << output;
 	PrintToFile(output);
 }
 
