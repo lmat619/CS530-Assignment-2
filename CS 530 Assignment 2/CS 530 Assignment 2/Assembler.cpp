@@ -27,6 +27,7 @@ int StartingAddress = 0;
 int IndexCount = -1;
 int ProgramLength;
 int reserveByteCount = 0;
+int useModRecords = 0;
 char* error = new char[100];
 
 void Pass1(std::string Path)
@@ -77,6 +78,10 @@ void Pass1(std::string Path)
 			if(!strcmp(OpCode, "START"))
 			{
 				PC = StartingAddress = HexToInt(Operand);
+				if (StartingAddress != 0)
+					useModRecords = 0;
+				else
+					useModRecords = 1;
 			}
 
 			//Check if line contains a label
@@ -310,6 +315,10 @@ void Pass2()
 		string currentOperand = OperandArray[currentLineIndex];
 		string currentLiteral = LitArray[currentLineIndex];
 		WordByteType currentUserHex = userHex[currentLineIndex];
+		int lastPC = 0;
+		if (currentLineIndex != 0)
+			lastPC = PCArray[currentLineIndex - 1];
+
 		if(currentOpCode == "START")
 		{
 			output += "H";
@@ -357,7 +366,7 @@ void Pass2()
 			}
 			break;
 		}
-		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral, currentUserHex);
+		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral, currentUserHex, lastPC);
 
 		if((textRecord.length() + objectCode.length()) > 60 || currentOpCode == "RESW" || currentOpCode == "RESB")
 		{
@@ -386,7 +395,7 @@ void Pass2()
 	PrintToFile(output);
 }
 
-string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, WordByteType currentUserHex)
+string GenerateObjectCode(int currentPC, string currentOpCode, string currentLabel, string currentOperand, string currentLiteral, WordByteType currentUserHex, int lastPC)
 {
 	reserveByteCount = 0;
 	string objCode("");
@@ -455,27 +464,29 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 			if(currentOpCode[0] == '+')
 			{
 				//format 4
-
 				//Add the modification records
-				if (currentOperand.find("#") != string::npos)
-				{					
-					int foundLabel = -1;
-					for (int i = 0; i < IndexCount ; i++)
-					{
-						if (LabelArray[i] == currentOperand.substr(1))
+				if (useModRecords)
+				{
+					if (currentOperand.find("#") != string::npos)
+					{					
+						int foundLabel = -1;
+						for (int i = 0; i < IndexCount ; i++)
 						{
-							foundLabel = i;
-							break;
+							if (LabelArray[i] == currentOperand.substr(1))
+							{
+								foundLabel = i;
+								break;
+							}
+						}
+						if (foundLabel != -1)
+						{
+							ModRecArray[ModRecordCounter++] = "M" + IntToHex(lastPC + 1) + "05";
 						}
 					}
-					if (foundLabel != -1)
-					{
-						ModRecArray[ModRecordCounter++] = "M^" + IntToHex(PCArray[foundLabel]) + "^05";
+					else
+					{						
+						ModRecArray[ModRecordCounter++] = "M" + IntToHex(lastPC + 1) + "05";						
 					}
-				}
-				else
-				{
-					ModRecArray[ModRecordCounter++] = "M^" + IntToHex(currentPC) + "^05";
 				}
 
 				char* op1 = new char[MAX_OPCODE_SIZE];
@@ -618,6 +629,10 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 					{
 						string address("");
 						add = it->second.Address;
+						if (useModRecords)
+						{
+							ModRecArray[ModRecordCounter++] = "M" + IntToHex(lastPC + 1) + "04";
+						}
 						address = IntToHex(add);
 							while(address.length() < 4)
 								address = "0" + address;
@@ -630,7 +645,6 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 							char newVal = bit[0];
 							address[0] = newVal;
 						}
-
 						objCode += currentMnemonic.Opcode + address;
 					}
 				}
@@ -895,7 +909,7 @@ void GetOperand(char* dest, char* line)
 	}
 	if (checkForBadLine == 0)
 	{
-		for(i = 0; i < 50; i++)
+		for(i = 0; i < 18; i++)
 		{
 			dest[i] = line[i+18];
 			if(dest[i] == '\0')

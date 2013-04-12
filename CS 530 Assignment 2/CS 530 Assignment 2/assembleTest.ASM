@@ -13,7 +13,7 @@ ENDFIL   LDA      EOF               .INSERT END OF FILE MARKER
          JSUB     WRREC             .WRITE EOF
          LDL      RETADR            .GET RETURN ADDRESS
          RSUB                      .RETURN TO CALLER
-EOF      BYTE     C'EOF'
+EOF      BYTE     C'\nEOF'
 THREE    WORD     3
 ZERO     WORD     0
 ONE      WORD     1
