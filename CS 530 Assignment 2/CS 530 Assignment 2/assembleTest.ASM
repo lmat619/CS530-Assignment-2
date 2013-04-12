@@ -1,43 +1,43 @@
-TEST     START    1000              TEST PROGRAM FOR SIC SOFTWARE
-FIRST    STL      RETADR            SAVE RETURN ADDRESS
-CLOOP    JSUB     RDREC             READ INPUT RECORD
-         LDA      LENGTH            TEST FOR EOF (LENGTH = 0
-         COMP     ONE               PLUS EOL OR EOF)
-         JEQ      ENDFIL            EXIT IF EOF FOUND
-         JSUB     WRREC             WRITE OUTPUT RECORD
-         J        CLOOP             LOOP
-ENDFIL   LDA      EOF               INSERT END OF FILE MARKER
+TEST     START    1000              .TEST PROGRAM FOR SIC SOFTWARE
+FIRST    STL      RETADR            .SAVE RETURN ADDRESS
+CLOOP    JSUB     RDREC             .READ INPUT RECORD
+         LDA      LENGTH            .TEST FOR EOF (LENGTH = 0
+         COMP     ONE                 .PLUS EOL OR EOF)
+         JEQ      ENDFIL            .EXIT IF EOF FOUND
+         JSUB     WRREC             .WRITE OUTPUT RECORD
+         J        CLOOP             .LOOP
+ENDFIL   LDA      EOF               .INSERT END OF FILE MARKER
          STA      BUFFER
-         LDA      THREE             SET LENGTH = 3
+         LDA      THREE             .SET LENGTH = 3
          STA      LENGTH
-         JSUB     WRREC             WRITE EOF
-         LDL      RETADR            GET RETURN ADDRESS
-         RSUB                       RETURN TO CALLER
-EOF      BYTE     C'EOF'
+         JSUB     WRREC             .WRITE EOF
+         LDL      RETADR            .GET RETURN ADDRESS
+         RSUB                      .RETURN TO CALLER
+EOF      BYTE     C'\nEOF'
 THREE    WORD     3
 ZERO     WORD     0
 ONE      WORD     1
 FIVE     WORD     5
 RETADR   RESW     1
 LENGTH   RESW     1
-BUFFER   RESB     4096              4096-BYTE BUFFER AREA
+BUFFER   RESB     4096              .4096-BYTE BUFFER AREA
 . 
 .       SUBROUTINE TO READ RECORD INTO BUFFER
 . 
-RDREC    LDX      ZERO              CLEAR LOOP COUNTER
-         LDA      ZERO              CLEAR A TO ZERO
-RLOOP    TD       INPUT             TEST INPUT DEVICE
-         JEQ      RLOOP             LOOP UNTIL READY
-         RD       INPUT             READ CHARACTER INTO REGISTER A
-         COMP     FIVE              TEST FOR EOL OR EOF
-         JLT      EXIT              EXIT LOOP IF FOUND
-         STCH     BUFFER,X          STORE CHARACTER IN BUFFER
-         TIX      MAXLEN            LOOP UNLESS MAX LENGTH
-         JLT      RLOOP             HAS BEEN REACHED
-EXIT     STCH     BUFFER,X          STORE EOL/EOF IN BUFFER
-         STX      LENGTH            SAVE RECORD LENGTH
-         LDA      LENGTH            MODIFY RECORD LENGTH TO INCLUDE
-         ADD      ONE               EOL OR EOF
+RDREC    LDX      ZERO              .CLEAR LOOP COUNTER
+         LDA      ZERO              .CLEAR A TO ZERO
+RLOOP    TD       INPUT             .TEST INPUT DEVICE
+         JEQ      RLOOP             .LOOP UNTIL READY
+         RD       INPUT             .READ CHARACTER INTO REGISTER A
+         COMP     FIVE              .TEST FOR EOL OR EOF
+         JLT      EXIT              .EXIT LOOP IF FOUND
+         STCH     BUFFER,X          .STORE CHARACTER IN BUFFER
+         TIX      MAXLEN            .LOOP UNLESS MAX LENGTH
+         JLT      RLOOP             .    HAS BEEN REACHED
+EXIT     STCH     BUFFER,X          .STORE EOL/EOF IN BUFFER
+         STX      LENGTH            .SAVE RECORD LENGTH
+         LDA      LENGTH            .MODIFY RECORD LENGTH TO INCLUDE
+         ADD      ONE               .  EOL OR EOF
          STA      LENGTH
          RSUB                      .RETURN TO CALLER
 INPUT    BYTE     X'F3'             .CODE FOR INPUT DEVICE
