@@ -868,7 +868,7 @@ int GetRegisterNum(string reg)
 void GetLabel(char* dest, char* line)
 {
 	int i;
-	for(i = 0; i < 8; i++)
+	for(i = 0; i < 6; i++)
 	{
 		if (line[i] != '\0')
 			dest[i] = line[i];
@@ -888,7 +888,7 @@ void GetOpCode(char* dest, char* line)
 	}
 	if (checkForBadLine == 0)
 	{
-		for(i = 0; i < 8; i++)
+		for(i = 0; i < 7; i++)
 		{
 			if (line[i+9] != '\0')
 				dest[i] = line[i+9];
