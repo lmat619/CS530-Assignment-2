@@ -46,7 +46,7 @@ void Pass1(std::string Path)
 
 	//Read each line in the file
 	while(fgets(line, sizeof(line), localFP) != NULL)
-	{
+	{		
 		//Check if line is a comment
 		if(line[0] != '.' && line[0] != 10)
 		{
@@ -57,6 +57,8 @@ void Pass1(std::string Path)
 			{
 				continue;
 			}
+
+			IndexCount++;
 			if (lineS.find(".") != string::npos)
 			{				
 				lineS = lineS.substr(0, lineS.find_first_of("."));
@@ -85,7 +87,7 @@ void Pass1(std::string Path)
 			}
 
 			//Check if line contains a label
-			if(strcmp(Label,""))
+			if(strcmp(Label,"") && strcmp(Label," "))
 			{
 				map<std::string, Symbol>::iterator it = SymbolTable.find(Label);
 				//If it does not exist, add symbol to table
