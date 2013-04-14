@@ -57,8 +57,6 @@ void Pass1(std::string Path)
 			{
 				continue;
 			}
-
-			IndexCount++;
 			if (lineS.find(".") != string::npos)
 			{				
 				lineS = lineS.substr(0, lineS.find_first_of("."));

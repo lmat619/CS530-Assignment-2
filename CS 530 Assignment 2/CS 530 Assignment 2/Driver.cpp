@@ -16,7 +16,7 @@ string IntToHex(int num);
 int main(int argc, char* argv[])
 {
 	std::string filePath;
-	filePath = argv[1];
+	//filePath = argv[1];
 	/*if(argc > 1)
 		std::string filePath(argv[1]);
 	else
