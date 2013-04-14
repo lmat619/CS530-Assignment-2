@@ -179,6 +179,7 @@ void Pass1(std::string Path)
 				{
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
+					userHex[IndexCount] = Hex;
 					PC += (strlen(Operand) / 2);
 
 					//Add Symbol (done below)
@@ -187,11 +188,12 @@ void Pass1(std::string Path)
 				{
 					RemoveEndApostrophe(Operand);
 					RemoveOperandType(Operand);
+					userHex[IndexCount] = Char;
 					PC += strlen(Operand);
 					//Add Symbol (done below)
 				}
 				else if(Operand[0] == '*')
-				{
+				{					
 					//Add Symbol (done below)
 				}
 				else
@@ -298,6 +300,30 @@ void Pass1(std::string Path)
 		lit->Address = PC;
 	}
 
+	for (int currentLineIndex = 0; currentLineIndex <= IndexCount; currentLineIndex++)
+	{
+		if (OpCodeArray[currentLineIndex] == "EQU")
+		{
+			if (userHex[IndexCount] = Char)
+			{
+
+			}
+			else if (userHex[IndexCount] = Hex)
+			{
+
+			}
+			else if (OperandArray[IndexCount] != "*")
+			{
+				if (OperandArray[IndexCount].find_first_of("-") || OperandArray[IndexCount].find_first_of("+") ||
+					OperandArray[IndexCount].find_first_of("/") || OperandArray[IndexCount].find_first_of("*") )
+				{
+
+				}
+			}
+			//write math
+			//get label address
+		}
+	}
 	ProgramLength = PC - StartingAddress;
 }
 
