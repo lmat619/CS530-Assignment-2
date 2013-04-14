@@ -63,6 +63,12 @@ void Pass1(std::string Path)
 				lineS = lineS.substr(0, lineS.find_first_of("."));
 			}
 			strcpy(line, lineS.c_str());
+			while (line[0] == '\r')
+			{
+				char *ptr = line;
+				ptr++;
+				strcpy(line, ptr);
+			}
 			Label[0] = 0;
 			OpCode[0] = 0;
 			Operand[0] = 0;

@@ -1,4 +1,4 @@
-﻿Build started 4/14/2013 11:58:46 AM.
+﻿Build started 4/14/2013 1:41:58 PM.
      1>Project "C:\Program Files (x86)\SmartGitHg 4\bin\CS530-Assignment-2_\CS 530 Assignment 2\CS 530 Assignment 2\CS 530 Assignment 2.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\CS 530 Assignment 2.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -17,4 +17,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.04
+Time Elapsed 00:00:00.06
