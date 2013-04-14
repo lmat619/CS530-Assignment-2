@@ -192,6 +192,7 @@ void Pass1(std::string Path)
 				}
 				else if(Operand[0] == '*')
 				{
+					strcpy(Operand, IntToHex(PC).c_str());
 					//Add Symbol (done below)
 				}
 				else
@@ -263,6 +264,12 @@ void Pass1(std::string Path)
 								int length = (strlen(OperandCopy) / 2);
 								string val(OperandCopy);
 								LiteralTable.insert(make_pair(litName, Literal(litName, val, length)));
+							}
+							else if(OperandCopy[0] == '*')
+							{
+								string PCString = IntToHex(PC);
+								int length = 2; //This is because min/max length for PC is 2
+								LiteralTable.insert(make_pair(litName, Literal(litName, PCString, length)));
 							}
 						}
 					}
@@ -660,12 +667,16 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						//110010
 						OpCode += 3;
 						objCode += IntToHex(OpCode);
-						objCode += "2";
 						map<std::string, Literal>::iterator it = LiteralTable.find(currentLiteral);
 						//If it does not exist, add literal to table
 						if(it != LiteralTable.end())
 						{
-							string address = IntToHex(it->second.Address - currentPC);
+							int displacement = it->second.Address - currentPC;
+							if (displacement > 2048)
+								objCode += "4";
+							else
+								objCode += "2";
+							string address = IntToHex(displacement);
 							while (address.length() < 3)
 							{
 								address = "0" + address;
@@ -679,13 +690,17 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						//111010					
 						OpCode += 3;
 						objCode += IntToHex(OpCode);
-						objCode += "10";
 						currentOperand = currentOperand.substr(0, currentOperand.find_first_of(","));
 						map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
 						//If it does not exist, add literal to table
 						if(it != SymbolTable.end())
 						{
-							string address = IntToHex(it->second.Address - currentPC);
+							int displacement = it->second.Address - currentPC;
+							if (displacement > 2048)
+								objCode += "12";
+							else
+								objCode += "10";
+							string address = IntToHex(displacement);
 							while (address.length() < 3)
 							{
 								address = "0" + address;
@@ -700,13 +715,18 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						//100010
 						OpCode += 2;
 						objCode += IntToHex(OpCode);
-						objCode += "2";
+						//objCode += "2";
 						currentOperand = currentOperand.substr(1);
 						map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
 						//If it does not exist, add literal to table
 						if(it != SymbolTable.end())
 						{
-							string address = IntToHex(it->second.Address - currentPC);
+							int displacement = it->second.Address - currentPC;
+							if (displacement > 2048)
+								objCode += "4";
+							else
+								objCode += "2";
+							string address = IntToHex(displacement);
 							while (address.length() < 3)
 							{
 								address = "0" + address;
@@ -720,13 +740,18 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						//010010
 						OpCode += 1;
 						objCode += IntToHex(OpCode);
-						objCode += "2";
+						//objCode += "2";
 						currentOperand = currentOperand.substr(1);
 						map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
 						//If it does not exist, add literal to table
 						if(it != SymbolTable.end())
 						{
-							string address = IntToHex(it->second.Address - currentPC);
+							int displacement = it->second.Address - currentPC;
+							if (displacement > 2048)
+								objCode += "4";
+							else
+								objCode += "2";
+							string address = IntToHex(displacement);
 							while (address.length() < 3)
 							{
 								address = "0" + address;
@@ -746,12 +771,17 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						//110010
 						OpCode += 3;
 						objCode += IntToHex(OpCode);
-						objCode += "2";					
+						//objCode += "2";					
 						map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
 						//If it does not exist, add literal to table
 						if(it != SymbolTable.end())
 						{
-							string address = IntToHex(it->second.Address - currentPC);
+							int displacement = it->second.Address - currentPC;
+							if (displacement > 2048)
+								objCode += "4";
+							else
+								objCode += "2";
+							string address = IntToHex(displacement);
 							while (address.length() < 5)
 							{
 								address = "0" + address;
