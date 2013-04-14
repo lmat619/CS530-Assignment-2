@@ -47,10 +47,10 @@ void Pass1(std::string Path)
 	//Read each line in the file
 	while(fgets(line, sizeof(line), localFP) != NULL)
 	{
-		IndexCount++;
 		//Check if line is a comment
-		if(line [0] != '.')
+		if(line[0] != '.' && line[0] != 10)
 		{
+			IndexCount++;
 			TrimEnd(line);
 			string lineS(line);
 			if (lineS == "")
@@ -281,9 +281,9 @@ void Pass1(std::string Path)
 
 
 			PCArray[IndexCount] = PC;
-			OpCodeArray[IndexCount] = OpCode;
-			LabelArray[IndexCount] = Label;
-			OperandArray[IndexCount] = Operand;
+			OpCodeArray[IndexCount] = string(OpCode);
+			LabelArray[IndexCount] = string(Label);
+			OperandArray[IndexCount] = string(Operand);
 		}
 		else
 		{
