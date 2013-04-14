@@ -87,9 +87,6 @@
     <ClInclude Include="LiteralTableDictionary.h" />
     <ClInclude Include="SymbolTableDictionary.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="assembleTest.ASM" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 		getline(cin, filePath);
 	}*/
 
-	filePath = ".\\assembleTest2.asm";
+	filePath = ".\\SICTEST.asm";
 	LoadDictionary();
 
 	Pass1(filePath);

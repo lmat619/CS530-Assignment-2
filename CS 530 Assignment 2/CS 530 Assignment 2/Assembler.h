@@ -37,6 +37,7 @@ void GetOpCode(char* dest, char* line);
 void GetOperand(char* dest, char* line);
 int HexToInt(char* string);
 string IntToHex(int num);
+void TrimBegin(char *string);
 void TrimEnd(char *string);
 void RemoveEndApostrophe(char *string);
 void RemoveOperandType(char *string);

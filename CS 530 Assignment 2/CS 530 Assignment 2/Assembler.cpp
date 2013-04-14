@@ -899,6 +899,7 @@ void GetLabel(char* dest, char* line)
 			dest[i] = line[i];
 	}
 	dest[i] = '\0';
+	TrimBegin(dest);
 	TrimEnd(dest);
 }
 
@@ -915,11 +916,12 @@ void GetOpCode(char* dest, char* line)
 	{
 		for(i = 0; i < 7; i++)
 		{
-			if (line[i+9] != '\0')
-				dest[i] = line[i+9];
+			if (line[i+8] != '\0')
+				dest[i] = line[i+8];
 		}
 	}
 	dest[i] = '\0';
+	TrimBegin(dest);
 	TrimEnd(dest);
 }
 
@@ -934,14 +936,15 @@ void GetOperand(char* dest, char* line)
 	}
 	if (checkForBadLine == 0)
 	{
-		for(i = 0; i < 18; i++)
+		for(i = 0; i < 19; i++)
 		{
-			dest[i] = line[i+18];
+			dest[i] = line[i+16];
 			if(dest[i] == '\0')
 				break;
 		}
 	}
 	dest[i] = '\0';
+	TrimBegin(dest);
 	TrimEnd(dest);
 }
 
@@ -957,6 +960,18 @@ string IntToHex(int num)
 	string hexString(hex);
 	std::transform(hexString.begin(), hexString.end(), hexString.begin(), ::toupper);
 	return hexString;
+}
+
+void TrimBegin(char *string)
+{
+	char *ptr = string;
+	for (int i = 0; i < strlen(string); ptr++)
+	{
+		if (*ptr != ' ' && *ptr != '\t' && *ptr != '\n')
+			break;
+	}
+	if (*ptr != '\0')
+		strcpy(string, ptr);
 }
 
 void TrimEnd(char *string)
