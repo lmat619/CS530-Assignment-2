@@ -182,31 +182,105 @@ void Pass1(std::string Path)
 			}
 			else if (!strcmp(OpCode, "EQU"))
 			{
-				if(Operand[0] == 'X' && Operand[1] == '\'')
-				{
-					RemoveEndApostrophe(Operand);
-					RemoveOperandType(Operand);
-					userHex[IndexCount] = Hex;
-					PC += (strlen(Operand) / 2);
+				map<std::string, Symbol>::iterator it = SymbolTable.find(Label);
+				//If it does not exist, add symbol to table
+				if(it != SymbolTable.end())
+				{									
+					if(Operand[0] == 'X' && Operand[1] == '\'')
+					{
+						RemoveEndApostrophe(Operand);
+						RemoveOperandType(Operand);
+						userHex[IndexCount] = Hex;
+						PC += (strlen(Operand) / 2);
 
-					//Add Symbol (done below)
-				}
-				else if(Operand[0] == 'C' && Operand[1] == '\'')
-				{
-					RemoveEndApostrophe(Operand);
-					RemoveOperandType(Operand);
-					userHex[IndexCount] = Char;
-					PC += strlen(Operand);
-					//Add Symbol (done below)
-				}
-				else if(Operand[0] == '*')
-				{					
-					//Add Symbol (done below)
-				}
-				else
-				{
-					PC += HexToInt(Operand);
-					//Add Symbol (done below)
+						//Add Symbol (done below)
+					}
+					else if(Operand[0] == 'C' && Operand[1] == '\'')
+					{
+						RemoveEndApostrophe(Operand);
+						RemoveOperandType(Operand);
+						userHex[IndexCount] = Char;
+						PC += strlen(Operand);
+						//Add Symbol (done below)
+					}
+					else if(Operand[0] == '*')
+					{					
+						//Add Symbol (done below)
+						//it->second.Address = 0;
+					}
+					else 
+					{
+						string oper(Operand);
+						if (oper.find_first_of("+") != -1)
+						{
+							int plusIndex = oper.find_first_of("+");
+							string op1 = oper.substr(0, plusIndex);
+							string op2 = oper.substr(plusIndex + 1, oper.length() - plusIndex);
+							int op1int = 0;
+							int op2int = 0;
+							map<std::string, Symbol>::iterator it2 = SymbolTable.find(op1);
+							if(it2 != SymbolTable.end())
+							{
+								op1int = it2->second.Address;
+							}
+							else
+							{
+								op1int = atoi(op1.c_str());
+							}
+							map<std::string, Symbol>::iterator it3 = SymbolTable.find(op2);
+							if(it3 != SymbolTable.end())
+							{
+								op2int = it3->second.Address;
+							}
+							else
+							{
+								op2int = atoi(op2.c_str());
+							}
+							it->second.Address = op1int + op2int;							
+ 						}
+						else if (oper.find_first_of("-") != -1)
+						{
+							int minusIndex = oper.find_first_of("-");
+							string op1 = oper.substr(0, minusIndex);
+							string op2 = oper.substr(minusIndex + 1, oper.length() - minusIndex);
+							int op1int = 0;
+							int op2int = 0;
+							map<std::string, Symbol>::iterator it2 = SymbolTable.find(op1);
+							if(it2 != SymbolTable.end())
+							{
+								op1int = it2->second.Address;
+							}
+							else
+							{
+								op1int = atoi(op1.c_str());
+							}
+							map<std::string, Symbol>::iterator it3 = SymbolTable.find(op2);
+							if(it3 != SymbolTable.end())
+							{
+								op2int = it3->second.Address;
+							}
+							else
+							{
+								op2int = atoi(op2.c_str());
+							}
+							it->second.Address = op1int - op2int;
+						}
+						else
+						{
+							map<std::string, Symbol>::iterator it2 = SymbolTable.find(oper);
+							if(it2 != SymbolTable.end())
+							{
+								it->second.Address = it2->second.Address;
+							}
+							else
+							{
+								it->second.Address = atoi(Operand);
+							}
+						}
+						
+						PC += atoi(Operand);
+						//Add Symbol (done below)
+					}
 				}
 			}
 			else
