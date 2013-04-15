@@ -28,6 +28,7 @@ int IndexCount = -1;
 int ProgramLength;
 int reserveByteCount = 0;
 int useModRecords = 0;
+int badLineError = 0;
 char* error = new char[100];
 
 void Pass1(std::string Path)
@@ -47,10 +48,10 @@ void Pass1(std::string Path)
 	//Read each line in the file
 	while(fgets(line, sizeof(line), localFP) != NULL)
 	{		
+		badLineError = 0;
 		//Check if line is a comment
-		if(line[0] != '.' && line[0] != 10)
+		if(line [0] != '.' && line[0] != 10 && line[0] != '\0')
 		{
-			IndexCount++;
 			TrimEnd(line);
 			string lineS(line);
 			if (lineS == "")
@@ -75,11 +76,11 @@ void Pass1(std::string Path)
 			GetOpCode(OpCode, line);
 			GetOperand(Operand, line);			
 
-			if (!strcmp(OpCode, ""))
+			if (!strcmp(OpCode, "") || badLineError == 1) 
 			{
 				continue;
 			}
-
+			IndexCount++;
 			//Check if OpCode is directive
 			if(!strcmp(OpCode, "START"))
 			{
@@ -91,7 +92,7 @@ void Pass1(std::string Path)
 			}
 
 			//Check if line contains a label
-			if(strcmp(Label,"") && strcmp(Label," "))
+			if(strcmp(Label,"") && strcmp(Label, " "))
 			{
 				map<std::string, Symbol>::iterator it = SymbolTable.find(Label);
 				//If it does not exist, add symbol to table
@@ -212,7 +213,12 @@ void Pass1(std::string Path)
 			{
 				Mnemonic currentMnemonic;
 				//Check if OpCode exists in table
-				map<std::string, Mnemonic>::iterator it = InstructionTable.find(OpCode);
+				char* InsTest = new char[strlen(OpCode)];
+				strcpy(InsTest, OpCode);
+				std::string MnemonicTest(InsTest);
+				if(InsTest[0] == '+')
+					MnemonicTest = ++InsTest;
+				map<std::string, Mnemonic>::iterator it = InstructionTable.find(MnemonicTest);
 				//If it exists, process line
 				if(it != InstructionTable.end())
 				{
@@ -381,6 +387,11 @@ void Pass2()
 				textRecord = "";
 			}
 			//do stuff
+			//write mods
+			for (int i = 0; i < ModRecordCounter; i++)
+			{
+				output += ModRecArray[i] + "\n";
+			}
 			//E^startingaddressinhex
 			string starting = IntToHex(StartingAddress);
 			while (starting.length() < 6)
@@ -389,13 +400,7 @@ void Pass2()
 			}
 			output += "E";
 			output += starting;
-			output += "\n";
-
-			//write mods
-			for (int i = 0; i < ModRecordCounter; i++)
-			{
-				output += ModRecArray[i] + "\n";
-			}
+			output += "\n";			
 			break;
 		}
 		string objectCode = GenerateObjectCode(currentPC, currentOpCode, currentLabel, currentOperand, currentLiteral, currentUserHex, lastPC);
@@ -487,7 +492,10 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 		//get from dictionary
 		Mnemonic currentMnemonic;
 		//Check if OpCode exists in table
-		map<std::string, Mnemonic>::iterator it = InstructionTable.find(currentOpCode);
+		std::string MnemonicTest = currentOpCode;
+		if(currentOpCode[0] == '+')
+			MnemonicTest = MnemonicTest.substr(1);
+		map<std::string, Mnemonic>::iterator it = InstructionTable.find(MnemonicTest);
 		//If it exists, process line
 		if(it != InstructionTable.end())
 		{
@@ -511,12 +519,19 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						}
 						if (foundLabel != -1)
 						{
-							ModRecArray[ModRecordCounter++] = "M" + IntToHex(lastPC + 1) + "05";
+							std::string address = IntToHex(lastPC + 1);
+							while (address.length() < 6)
+								address = "0" + address;
+							ModRecArray[ModRecordCounter++] = "M" + address + "05";
 						}
 					}
 					else
 					{						
-						ModRecArray[ModRecordCounter++] = "M" + IntToHex(lastPC + 1) + "05";						
+
+						std::string address = IntToHex(lastPC + 1);
+						while (address.length() < 6)
+							address = "0" + address;
+						ModRecArray[ModRecordCounter++] = "M" + address + "05";						
 					}
 				}
 
@@ -662,7 +677,10 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						add = it->second.Address;
 						if (useModRecords)
 						{
-							ModRecArray[ModRecordCounter++] = "M" + IntToHex(lastPC + 1) + "04";
+							std::string address = IntToHex(lastPC + 1);
+							while (address.length() < 6)
+								address = "0" + address;
+							ModRecArray[ModRecordCounter++] = "M" + address + "04";
 						}
 						address = IntToHex(add);
 							while(address.length() < 4)
@@ -755,7 +773,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 						objCode += "2";
 						currentOperand = currentOperand.substr(1);
 						map<std::string, Symbol>::iterator it = SymbolTable.find(currentOperand);
-						//If it does not exist, add literal to table
+						//#Symbol found
 						if(it != SymbolTable.end())
 						{
 							string address = IntToHex(it->second.Address - currentPC);
@@ -770,6 +788,7 @@ string GenerateObjectCode(int currentPC, string currentOpCode, string currentLab
 							string address = IntToHex(atoi(currentOperand.c_str()));
 							while (address.length() < 3)
 								address = "0" + address;
+							objCode += address;
 						}
 					}
 					else
@@ -834,6 +853,7 @@ std::vector<std::string> SplitCommas(string operand)
 	int i;
 	for(i = 0; op[i] != ','; i++)
 		reg1[i] = op[i];
+	reg1[i] = '\0';
 	op += ++i;
 	string register1(reg1);
 	string register2(op);
@@ -916,7 +936,7 @@ void GetOpCode(char* dest, char* line)
 	for (int j = 0 ; j < 9; j++)
 	{
 		if (line[j] == '\0')
-			checkForBadLine = 1;
+			checkForBadLine = badLineError = 1; 
 	}
 	if (checkForBadLine == 0)
 	{
@@ -935,10 +955,10 @@ void GetOperand(char* dest, char* line)
 {
 	int i = 0;
 	int checkForBadLine = 0;
-	for (int j = 0 ; j < 18; j++)
+	for (int j = 0 ; j < 16; j++)
 	{
 		if (line[j] == '\0')
-			checkForBadLine = 1;
+			checkForBadLine = badLineError = 1;
 	}
 	if (checkForBadLine == 0)
 	{
